@@ -69,6 +69,8 @@ def Help(command=''):
         print('CLEAR          Clear the terminal screen')
         print('READ           Dump text file contents to terminal screen')
         print('DUMP           Dump text file contents to terminal screen')
+        print('INTEG          Package/Integration module manager')
+        print('PKG            Package/Integration module manager')
         print('EXIT           Shuts down the program')
         print('QUIT           Shuts down the program')
         print('DIE            Shuts down the program')
@@ -102,6 +104,16 @@ def Help(command=''):
 
     elif command.upper() == 'DUMP':
         print('Dump text file contents to terminal screen\n')
+
+    elif command.upper() == 'INTEG':
+        print('Package/Integration module manager\n')
+        print('INSTALL        Install a package/integration module')
+        print('REMOVE         Uninstall a package/integration module')
+
+    elif command.upper() == 'PKG':
+        print('Package/Integration module manager\n')
+        print('INSTALL        Install a package/integration module')
+        print('REMOVE         Uninstall a package/integration module')
 
     elif command.upper() == 'EXIT':
         print('Shuts down the program\n')
@@ -180,6 +192,18 @@ def cmd():
             log('Missing Command!', 4)
         else:
             Help('SYSTEM')
+
+    elif usr_in.lower().startswith('integ'):
+        if usr_in.lower().startswith('integ '):
+            log('Missing Command!', 4)
+        else:
+            Help('INTEG')
+    
+    elif usr_in.lower().startswith('pkg'):
+        if usr_in.lower().startswith('pkg '):
+            log('Missing Command!', 4)
+        else:
+            Help('PKG')
 
     elif usr_in.lower().startswith('read'):
         if usr_in.lower().startswith('read '):
