@@ -1,4 +1,4 @@
-import os, sys, configparser, datetime, re, subprocess
+import os, sys, configparser, datetime, re, subprocess, toml
 
 home_directory = os.path.expanduser( '~' )
 now = datetime.datetime.now()
@@ -46,6 +46,8 @@ if (os.path.exists("config.ini")):
     config.read('config.ini')
 else:
     file = open("config.ini", "a")
+    file.write("[MAIN]\n")
+    file.write("lang=en_US\n\n")
     file.write("[LOGGING]\n")
     file.write("0=LOG\n")
     file.write("1=INFO\n")
@@ -58,91 +60,96 @@ else:
     config.read('config.ini')
     log('No config file found!', 2)
 
+if os.path.exists('./lang/'+config['MAIN']['lang']+'.toml'):
+    lang = toml.decoder.load('./lang/'+config['MAIN']['lang']+'.toml')
+else:
+    raise FileExistsError('Failed to locate language file')
+
 def Help(command=''):
     if command == '':
-        print('For more information on a specific command, type HELP command-name\n')
-        print('HELP           Shows a list of commands, and a basic explanation of what they do')
-        print('CD             Change working directory')
-        print('LS             List current directory')
-        print('DIR            List current directory')
-        print('CLS            Clear the terminal screen')
-        print('CLEAR          Clear the terminal screen')
-        print('READ           Dump text file contents to terminal screen')
-        print('DUMP           Dump text file contents to terminal screen')
-        print('INTEG          Package/Integration module manager')
-        print('PKG            Package/Integration module manager')
-        print('EXIT           Shuts down the program')
-        print('QUIT           Shuts down the program')
-        print('DIE            Shuts down the program')
-        print('END            Shuts down the program')
-        print('ABORT          Shuts down the program')
-        print('ENDCLI         Shuts down the program')
-        print('ABANDON        Shuts down the program')
-        print('SYS            Use to configure some system things, be careful!')
-        print('SYSTEM         Use to configure some system things, be careful!')
+        print(lang['HELP']['more_info']+'\n')
+        print('HELP           '+lang['HELP']['HELP']['main'])
+        print('CD             '+lang['HELP']['CD']['main'])
+        print('LS             '+lang['HELP']['LIST_DIR']['main'])
+        print('DIR            '+lang['HELP']['LIST_DIR']['main'])
+        print('CLS            '+lang['HELP']['CLEAR']['main'])
+        print('CLEAR          '+lang['HELP']['CLEAR']['main'])
+        print('READ           '+lang['HELP']['READ']['main'])
+        print('DUMP           '+lang['HELP']['READ']['main'])
+        print('INTEG          '+lang['HELP']['PACKAGE']['main'])
+        print('PKG            '+lang['HELP']['PACKAGE']['main'])
+        print('EXIT           '+lang['HELP']['EXIT']['main'])
+        print('QUIT           '+lang['HELP']['EXIT']['main'])
+        print('DIE            '+lang['HELP']['EXIT']['main'])
+        print('END            '+lang['HELP']['EXIT']['main'])
+        print('ABORT          '+lang['HELP']['EXIT']['main'])
+        print('ENDCLI         '+lang['HELP']['EXIT']['main'])
+        print('ABANDON        '+lang['HELP']['EXIT']['main'])
+        print('SYS            '+lang['HELP']['SYSTEM']['main'])
+        print('SYSTEM         '+lang['HELP']['SYSTEM']['main'])
 
     elif command.upper() == 'HELP':
-        print('Shows a list of commands, and a basic explanation of what they do\n')
+        print(lang['HELP']['HELP']['main']+'\n')
 
     elif command.upper() == 'CD':
-        print('Change working directory\n')
+        print(lang['HELP']['CD']['main']+'\n')
 
     elif command.upper() == 'LS':
-        print('List current directory\n')
+        print(lang['HELP']['LIST_DIR']['main']+'\n')
 
     elif command.upper() == 'DIR':
-        print('List current directory\n')
+        print(lang['HELP']['LIST_DIR']['main']+'\n')
 
     elif command.upper() == 'CLS':
-        print('Clear the terminal screen\n')
+        print(lang['HELP']['CLEAR']['main']+'\n')
 
     elif command.upper() == 'CLEAR':
-        print('Clear the terminal screen\n')
+        print(lang['HELP']['CLEAR']['main']+'\n')
 
     elif command.upper() == 'READ':
-        print('Dump text file contents to terminal screen\n')
+        print(lang['HELP']['READ']['main']+'\n')
 
     elif command.upper() == 'DUMP':
-        print('Dump text file contents to terminal screen\n')
+        print(lang['HELP']['READ']['main']+'\n')
 
     elif command.upper() == 'INTEG':
-        print('Package/Integration module manager\n')
-        print('INSTALL        Install a package/integration module')
-        print('REMOVE         Uninstall a package/integration module')
+        print(lang['HELP']['PACKAGE']['main']+'\n')
+        print('INSTALL        '+lang['HELP']['PACKAGE']['SUB']['install'])
+        print('REMOVE         '+lang['HELP']['PACKAGE']['SUB']['remove'])
 
     elif command.upper() == 'PKG':
-        print('Package/Integration module manager\n')
-        print('INSTALL        Install a package/integration module')
-        print('REMOVE         Uninstall a package/integration module')
+        print(lang['HELP']['PACKAGE']['main']+'\n')
+        print('INSTALL        '+lang['HELP']['PACKAGE']['SUB']['install'])
+        print('REMOVE         '+lang['HELP']['PACKAGE']['SUB']['remove'])
 
     elif command.upper() == 'EXIT':
-        print('Shuts down the program\n')
+        print(lang['HELP']['EXIT']['main']+'\n')
 
     elif command.upper() == 'QUIT':
-        print('Shuts down the program\n')
+        print(lang['HELP']['EXIT']['main']+'\n')
 
     elif command.upper() == 'DIE':
-        print('Shuts down the program\n')
+        print(lang['HELP']['EXIT']['main']+'\n')
 
     elif command.upper() == 'END':
-        print('Shuts down the program\n')
+        print(lang['HELP']['EXIT']['main']+'\n')
 
     elif command.upper() == 'ABORT':
-        print('Shuts down the program\n')
+        print(lang['HELP']['EXIT']['main']+'\n')
 
     elif command.upper() == 'ENDCLI':
-        print('Shuts down the program\n')
+        print(lang['HELP']['EXIT']['main']+'\n')
 
     elif command.upper() == 'ABANDON':
-        print('Shuts down the program\n')
+        print(lang['HELP']['EXIT']['main']+'\n')
 
     elif command.upper() == 'SYS':
-        print('Use to configure some system things, be careful!\n')
-        print('RECURSION      Set the recursion limit, you probaly don\'t need to touch this')
+        print(lang['HELP']['SYSTEM']['main']+'\n')
+        print('RECURSION      '+lang['HELP']['SYSTEM']['SUB']['recursion'])
 
     elif command.upper() == 'SYSTEM':
-        print('Use to configure some system things, be careful!\n')
-        print('RECURSION      Set the recursion limit, you probaly don\'t need to touch this')
+        print(lang['HELP']['SYSTEM']['main']+'\n')
+        print('RECURSION      '+lang['HELP']['SYSTEM']['SUB']['recursion'])
 
 def cmd():
     Dir = os.path.normpath(os.getcwd())
@@ -159,7 +166,7 @@ def cmd():
             if os.path.exists(os.path.normpath(re.split('cd ', usr_in, 1, flags=re.IGNORECASE)[1])):
                 os.chdir(os.path.normpath(re.split('cd ', usr_in, 1, flags=re.IGNORECASE)[1]))
             else:
-                log('No such file or directory!', 3)
+                log(lang['ERROR']['no_file_directory'], 3)
         else:
             Help('CD')
 
@@ -168,7 +175,7 @@ def cmd():
             if os.path.exists(os.path.normpath(re.split('ls ', usr_in, 1, flags=re.IGNORECASE)[1])):
                 print(os.listdir(os.path.normpath(re.split('ls ', usr_in, 1, flags=re.IGNORECASE)[1])))
             else:
-                log('No such file or directory!', 3)
+                log(lang['ERROR']['no_file_directory'], 3)
         else:
             print(os.listdir(os.path.normpath(re.split('ls', usr_in, 1, flags=re.IGNORECASE)[1])))
 
@@ -177,31 +184,31 @@ def cmd():
             if os.path.exists(os.path.normpath(re.split('dir ', usr_in, 1, flags=re.IGNORECASE)[1])):
                 print(os.listdir(os.path.normpath(re.split('dir ', usr_in, 1, flags=re.IGNORECASE)[1])))
             else:
-                log('No file or directory!', 3)
+                log(lang['ERROR']['no_file_directory'], 3)
         else:
             print(os.listdir(os.path.normpath(re.split('dir', usr_in, 1, flags=re.IGNORECASE)[1])))
 
     elif usr_in.lower().startswith('sys'):
         if usr_in.lower().startswith('sys '):
-            log('Missing Command!', 4)
+            log(lang['ERROR']['missing_command'], 4)
         else:
             Help('SYS')
     
     elif usr_in.lower().startswith('system'):
         if usr_in.lower().startswith('system '):
-            log('Missing Command!', 4)
+            log(lang['ERROR']['missing_command'], 4)
         else:
             Help('SYSTEM')
 
     elif usr_in.lower().startswith('integ'):
         if usr_in.lower().startswith('integ '):
-            log('Missing Command!', 4)
+            log(lang['ERROR']['missing_command'], 4)
         else:
             Help('INTEG')
     
     elif usr_in.lower().startswith('pkg'):
         if usr_in.lower().startswith('pkg '):
-            log('Missing Command!', 4)
+            log(lang['ERROR']['missing_command'], 4)
         else:
             Help('PKG')
 
@@ -213,7 +220,7 @@ def cmd():
                     print(file.read())
                     file.close()
             else:
-                log('No such file or directory!', 3)
+                log(lang['ERROR']['no_file_directory'], 3)
         else:
             Help('READ')
 
@@ -225,27 +232,27 @@ def cmd():
                     print(file.read())
                     file.close()
             else:
-                log('No such file or directory!', 3)
+                log(lang['ERROR']['no_file_directory'], 3)
         else:
             Help('DUMP')
             
     elif usr_in.lower().startswith('clear') or usr_in.lower().startswith('cls'):
         if os.name == 'nt':
-            log('Cleared the screen', 1, False)
+            log(lang['COMMAND_OUTPUT']['CLEAR']['main'], 1, False)
             subprocess.run("cls")
         else:
-            log('Cleared the screen', 1, False)
+            log(lang['COMMAND_OUTPUT']['CLEAR']['main'], 1, False)
             subprocess.run("clear")
 
     elif usr_in.lower().startswith('exit') or usr_in.lower().startswith('quit') or usr_in.lower().startswith('die') or usr_in.lower().startswith('endcli') or usr_in.lower().startswith('end') or usr_in.lower().startswith('abort') or usr_in.lower().startswith('abandon'):
-        log('Program exited normally', 1)
+        log(lang['GENERAL']['normal_exit'], 1)
         die()
 
     elif usr_in == '':
-        log('User failed to input command!', 3)
+        log(lang['ERROR']['no_command_inputted'], 3)
 
     else:
-        log('Invalid command!', 3)
+        log(lang['ERROR']['unknown_command'], 3)
 
     cmd()
 
