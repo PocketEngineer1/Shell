@@ -1,4 +1,4 @@
-import os, sys, configparser, datetime, re, subprocess, toml
+import os, sys, configparser, datetime, re, subprocess, toml, json, json5, yaml, xml
 
 home_directory = os.path.expanduser( '~' )
 now = datetime.datetime.now()
@@ -62,6 +62,25 @@ else:
 
 if os.path.exists('./lang/'+config['MAIN']['lang']+'.toml'):
     lang = toml.decoder.load('./lang/'+config['MAIN']['lang']+'.toml')
+
+elif os.path.exists('./lang/'+config['MAIN']['lang']+'.json'):
+    file = open('./lang/'+config['MAIN']['lang']+'.json', 'r')
+    lang = json.load(file)
+    file.close()
+
+elif os.path.exists('./lang/'+config['MAIN']['lang']+'.json5'):
+    file = open('./lang/'+config['MAIN']['lang']+'.json5', 'r')
+    lang = json5.load(file)
+    file.close()
+    
+elif os.path.exists('./lang/'+config['MAIN']['lang']+'.yaml'):
+    file = open('./lang/'+config['MAIN']['lang']+'.yaml', 'r')
+    lang = yaml.safe_load(file)
+    file.close()
+    
+elif os.path.exists('./lang/'+config['MAIN']['lang']+'.xml'):
+    print
+
 else:
     raise FileExistsError('Failed to locate language file')
 
@@ -76,6 +95,7 @@ def Help(command=''):
         print('CLEAR          '+lang['HELP']['CLEAR']['main'])
         print('READ           '+lang['HELP']['READ']['main'])
         print('DUMP           '+lang['HELP']['READ']['main'])
+        print('HOST           '+lang['HELP']['HOST_CMD']['main'])
         print('INTEG          '+lang['HELP']['PACKAGE']['main'])
         print('PKG            '+lang['HELP']['PACKAGE']['main'])
         print('EXIT           '+lang['HELP']['EXIT']['main'])
@@ -111,6 +131,9 @@ def Help(command=''):
 
     elif command.upper() == 'DUMP':
         print(lang['HELP']['READ']['main']+'\n')
+
+    elif command.upper() == 'HOST':
+        print(lang['HELP']['HOST_CMD']['main']+'\n')
 
     elif command.upper() == 'INTEG':
         print(lang['HELP']['PACKAGE']['main']+'\n')
@@ -205,12 +228,20 @@ def cmd():
             log(lang['ERROR']['missing_command'], 4)
         else:
             Help('INTEG')
-    
+
     elif usr_in.lower().startswith('pkg'):
         if usr_in.lower().startswith('pkg '):
             log(lang['ERROR']['missing_command'], 4)
         else:
             Help('PKG')
+
+    elif usr_in.lower().startswith('host'):
+        log("It appears that this may not work correctly", 2)
+        if usr_in.lower().startswith('host '):
+            log(re.split('host ', usr_in, 1, flags=re.IGNORECASE)[1], Print=False)
+            subprocess.run(re.split('host ', usr_in, 1, flags=re.IGNORECASE)[1].split(" "))
+        else:
+            Help('HOST')
 
     elif usr_in.lower().startswith('read'):
         if usr_in.lower().startswith('read '):

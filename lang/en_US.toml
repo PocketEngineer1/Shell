@@ -7,6 +7,7 @@ missing_command="Missing Command!"
 no_file_directory="No such file or directory!"
 no_command_inputted="User failed to input command!"
 unknown_command="Invalid command!"
+language_file="There appears to be an issue with the language file!"
 
 [COMMAND_OUTPUT]
 [COMMAND_OUTPUT.CLEAR]
@@ -19,11 +20,13 @@ main="Shows a list of commands, and a basic explanation of what they do"
 [HELP.CD]
 main="Change working directory"
 [HELP.LIST_DIR]
-main="List current directory"
+main="List a directory"
 [HELP.CLEAR]
 main="Clear the terminal screen"
 [HELP.READ]
 main="Dump text file contents to terminal screen"
+[HELP.HOST_CMD]
+main="Run a command on the host shell"
 [HELP.PACKAGE]
 main="Integration package manager"
 [HELP.PACKAGE.SUB]
