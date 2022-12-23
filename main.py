@@ -1,4 +1,4 @@
-import os, sys, configparser, datetime, re, subprocess, toml, json, json5, yaml, xml
+import os, sys, configparser, datetime, re, subprocess, toml, json, json5, yaml
 
 home_directory = os.path.expanduser( '~' )
 now = datetime.datetime.now()
@@ -62,25 +62,6 @@ else:
 
 if os.path.exists('./lang/'+config['MAIN']['lang']+'.toml'):
     lang = toml.decoder.load('./lang/'+config['MAIN']['lang']+'.toml')
-
-elif os.path.exists('./lang/'+config['MAIN']['lang']+'.json'):
-    file = open('./lang/'+config['MAIN']['lang']+'.json', 'r')
-    lang = json.load(file)
-    file.close()
-
-elif os.path.exists('./lang/'+config['MAIN']['lang']+'.json5'):
-    file = open('./lang/'+config['MAIN']['lang']+'.json5', 'r')
-    lang = json5.load(file)
-    file.close()
-    
-elif os.path.exists('./lang/'+config['MAIN']['lang']+'.yaml'):
-    file = open('./lang/'+config['MAIN']['lang']+'.yaml', 'r')
-    lang = yaml.safe_load(file)
-    file.close()
-    
-elif os.path.exists('./lang/'+config['MAIN']['lang']+'.xml'):
-    print
-
 else:
     raise FileExistsError('Failed to locate language file')
 

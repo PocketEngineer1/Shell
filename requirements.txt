@@ -1,2 +1,3 @@
 toml
 pyyaml
+json5
