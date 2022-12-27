@@ -4,7 +4,7 @@ normal_exit="Program exited normally"
 [ERROR]
 unknown="Unknown error!"
 missing_command="Missing Command!"
-no_file_directory="No such file or directory!"
+invalid_path="No such file or directory!"
 no_command_inputted="User failed to input command!"
 unknown_command="Invalid command!"
 language_file="There appears to be an issue with the language file!"

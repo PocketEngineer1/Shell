@@ -1,4 +1,5 @@
-import os, sys, configparser, datetime, re, subprocess, toml, json, json5, yaml
+import os, sys, configparser, datetime, re, subprocess, toml
+from utils import *
 
 home_directory = os.path.expanduser( '~' )
 now = datetime.datetime.now()
@@ -47,7 +48,8 @@ if (os.path.exists("config.ini")):
 else:
     file = open("config.ini", "a")
     file.write("[MAIN]\n")
-    file.write("lang=en_US\n\n")
+    file.write("lang=en_US\n")
+    file.write("fallback_lang=fallback\n\n")
     file.write("[LOGGING]\n")
     file.write("0=LOG\n")
     file.write("1=INFO\n")
@@ -60,8 +62,13 @@ else:
     config.read('config.ini')
     log('No config file found!', 2)
 
+if os.path.exists('./lang/'+config['MAIN']['fallback_lang']+'.toml'):
+    lang = toml.decoder.load('./lang/'+config['MAIN']['fallback_lang']+'.toml')
+else:
+    raise FileExistsError('Failed to locate fallback language file')
+
 if os.path.exists('./lang/'+config['MAIN']['lang']+'.toml'):
-    lang = toml.decoder.load('./lang/'+config['MAIN']['lang']+'.toml')
+    Merge(toml.decoder.load('./lang/'+config['MAIN']['lang']+'.toml'), lang)
 else:
     raise FileExistsError('Failed to locate language file')
 
@@ -170,7 +177,7 @@ def cmd():
             if os.path.exists(os.path.normpath(re.split('cd ', usr_in, 1, flags=re.IGNORECASE)[1])):
                 os.chdir(os.path.normpath(re.split('cd ', usr_in, 1, flags=re.IGNORECASE)[1]))
             else:
-                log(lang['ERROR']['no_file_directory'], 3)
+                log(lang['ERROR']['invalid_path'], 3)
         else:
             Help('CD')
 
@@ -179,7 +186,7 @@ def cmd():
             if os.path.exists(os.path.normpath(re.split('ls ', usr_in, 1, flags=re.IGNORECASE)[1])):
                 print(os.listdir(os.path.normpath(re.split('ls ', usr_in, 1, flags=re.IGNORECASE)[1])))
             else:
-                log(lang['ERROR']['no_file_directory'], 3)
+                log(lang['ERROR']['invalid_path'], 3)
         else:
             print(os.listdir(os.path.normpath(re.split('ls', usr_in, 1, flags=re.IGNORECASE)[1])))
 
@@ -188,7 +195,7 @@ def cmd():
             if os.path.exists(os.path.normpath(re.split('dir ', usr_in, 1, flags=re.IGNORECASE)[1])):
                 print(os.listdir(os.path.normpath(re.split('dir ', usr_in, 1, flags=re.IGNORECASE)[1])))
             else:
-                log(lang['ERROR']['no_file_directory'], 3)
+                log(lang['ERROR']['invalid_path'], 3)
         else:
             print(os.listdir(os.path.normpath(re.split('dir', usr_in, 1, flags=re.IGNORECASE)[1])))
 
@@ -232,7 +239,7 @@ def cmd():
                     print(file.read())
                     file.close()
             else:
-                log(lang['ERROR']['no_file_directory'], 3)
+                log(lang['ERROR']['invalid_path'], 3)
         else:
             Help('READ')
 
@@ -244,7 +251,7 @@ def cmd():
                     print(file.read())
                     file.close()
             else:
-                log(lang['ERROR']['no_file_directory'], 3)
+                log(lang['ERROR']['invalid_path'], 3)
         else:
             Help('DUMP')
             
