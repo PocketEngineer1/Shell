@@ -1,6 +1,14 @@
-import os, re, subprocess
+import os, subprocess
 from utils import *
 from lib import *
+
+DEBUG = True
+DEBUG_LOG = True
+
+def debug_log(message):
+    now = datetime.datetime.now()
+    logFile.write('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message)+'\n')
+    print('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message)+'\n')
 
 class commands:
     def Help(command=''):
@@ -99,66 +107,80 @@ def cmd():
     Dir = os.path.normpath(os.getcwd())
     usr_in = input(Dir+'>')
 
-    Temp = re.split(' ', usr_in, 1)[0]
-    Temp = Temp.lower()
+    Temp = usr_in.split(' ', 1)
+    if DEBUG:
+        print(usr_in)
+        print(Temp)
+        if DEBUG_LOG:
+            debug_log(usr_in)
+            debug_log(Temp)
 
-    if Temp == 'help':
-        if Temp.startswith(Temp+' '):
-            commands.Help(re.split(' ', usr_in, 1)[1])
+
+    if Temp[0] == 'help':
+        if 1 < len(Temp):
+            if DEBUG:
+                print('Uses arguements')
+                if DEBUG_LOG:
+                    debug_log('Uses arguements')
+            commands.Help(Temp[1])
         else:
-            commands.Help(Temp)
+            if DEBUG:
+                print('Does not use arguements')
+                if DEBUG_LOG:
+                    debug_log('Uses arguements')
+            commands.Help()
 
-    elif Temp == 'cd':
-        if Temp.startswith(Temp+' '):
-            if os.path.exists(os.path.normpath(re.split(' ', usr_in, 1)[1])):
-                os.chdir(os.path.normpath(re.split(' ', usr_in, 1)[1]))
+    elif Temp[0] == 'cd':
+        if 1 < len(Temp):
+            if os.path.exists(os.path.normpath(Temp[1])):
+                os.chdir(os.path.normpath(Temp[1]))
             else:
                 log(lang['ERROR']['invalid_path'], 3)
         else:
-            commands.Help(Temp)
+            commands.Help(Temp[0])
 
-    elif Temp == 'ls' or Temp == 'dir':
-        if Temp.startswith(Temp+' '):
-            if os.path.exists(os.path.normpath(re.split(' ', usr_in, 1)[1])):
-                print(os.listdir(os.path.normpath(re.split('ls ', usr_in, 1, flags=re.IGNORECASE)[1])))
+    elif Temp[0] == 'ls' or Temp[0] == 'dir':
+        if 1 < len(Temp):
+            if os.path.exists(os.path.normpath(Temp[1])):
+                print(os.listdir(os.path.normpath(Temp[1])))
             else:
                 log(lang['ERROR']['invalid_path'], 3)
         else:
             print(os.listdir())
 
-    elif Temp == 'sys' or Temp == 'system':
-        if Temp.startswith(Temp+' '):
+    elif Temp[0] == 'sys' or Temp[0] == 'system':
+        if 1 < len(Temp):
             log(lang['ERROR']['missing_command'], 4)
         else:
-            commands.Help(Temp)
+            commands.Help(Temp[0])
 
-    elif Temp == 'integ' or Temp == 'pkg':
-        if usr_in.lower().startswith(Temp+' '):
+    elif Temp[0] == 'integ' or Temp [0]== 'pkg':
+        if 1 < len(Temp):
             log(lang['ERROR']['missing_command'], 4)
         else:
-            commands.Help(Temp)
+            commands.Help(Temp[0])
 
-    elif Temp == 'host':
+    elif Temp[0] == 'host':
         log("It appears that this may not work correctly", 2)
-        if usr_in.lower().startswith(Temp+' '):
-            log(re.split(Temp+' ', usr_in, 1, flags=re.IGNORECASE)[1], Print=False)
-            subprocess.run(re.split(Temp+' ', usr_in, 1, flags=re.IGNORECASE)[1].split(" "))
+        if 1 < len(Temp):
+            log(Temp[1], Print=False)
+            subprocess.run(Temp[1])
         else:
-            commands.Help(Temp)
+            commands.Help(Temp[0])
 
-    elif Temp == 'read' or Temp == 'dump':
-        if usr_in.lower().startswith(Temp+' '):
-            if os.path.exists(os.path.normpath(re.split(Temp+' ', usr_in, 1, flags=re.IGNORECASE)[1])):
-                if os.path.isfile(os.path.normpath(re.split(Temp+' ', usr_in, 1, flags=re.IGNORECASE)[1])):
-                    file = open(os.path.normpath(re.split(Temp+' ', usr_in, 1, flags=re.IGNORECASE)[1]), 'r')
+    elif Temp[0] == 'read' or Temp[0] == 'dump':
+        if 1 < len(Temp):
+            if os.path.exists(os.path.normpath(Temp[1])):
+                if os.path.isfile(os.path.normpath(Temp[1])):
+                    file = open(os.path.normpath(Temp[1]), 'r')
                     print(file.read())
                     file.close()
             else:
                 log(lang['ERROR']['invalid_path'], 3)
         else:
-            commands.Help(Temp)
+            commands.Help(Temp[0])
             
-    elif usr_in.lower().startswith('clear') or usr_in.lower().startswith('cls'):
+    elif Temp[0] == 'clear' or Temp[0] == 'cls':
         if os.name == 'nt':
             log(lang['COMMAND_OUTPUT']['CLEAR']['main'], 1, False)
             subprocess.run("cls")
@@ -166,7 +188,7 @@ def cmd():
             log(lang['COMMAND_OUTPUT']['CLEAR']['main'], 1, False)
             subprocess.run("clear")
 
-    elif usr_in.lower().startswith('exit') or usr_in.lower().startswith('quit') or usr_in.lower().startswith('die') or usr_in.lower().startswith('endcli') or usr_in.lower().startswith('end') or usr_in.lower().startswith('abort') or usr_in.lower().startswith('abandon'):
+    elif Temp[0] == 'exit' or Temp[0] == 'quit' or Temp[0] == 'die' or Temp[0] == 'end' or Temp[0] == 'abort' or Temp[0] == 'abandon':
         log(lang['GENERAL']['normal_exit'], 1)
         die()
 
@@ -175,9 +197,6 @@ def cmd():
 
     else:
         log(lang['ERROR']['unknown_command'], 3)
-
-    Temp = None
-    usr_in = None
 
     cmd()
 # end of function
