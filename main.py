@@ -3,16 +3,12 @@ from utils import *
 from lib import *
 
 DEBUG = True
-DEBUG_LOG = True
-
-def debug_log(message):
-    now = datetime.datetime.now()
-    logFile.write('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message)+'\n')
-    print('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message)+'\n')
 
 class commands:
     def Help(command=''):
-        if command == '':
+        Temp = command.upper()
+
+        if Temp == '':
             print(lang['HELP']['more_info']+'\n')
             print('HELP           '+lang['HELP']['HELP']['main'])
             print('CD             '+lang['HELP']['CD']['main'])
@@ -35,69 +31,33 @@ class commands:
             print('SYS            '+lang['HELP']['SYSTEM']['main'])
             print('SYSTEM         '+lang['HELP']['SYSTEM']['main'])
 
-        elif command.upper() == 'HELP':
+        elif Temp == 'HELP':
             print(lang['HELP']['HELP']['main']+'\n')
 
-        elif command.upper() == 'CD':
+        elif Temp == 'CD':
             print(lang['HELP']['CD']['main']+'\n')
 
-        elif command.upper() == 'LS':
+        elif Temp == 'LS' or Temp == 'DIR':
             print(lang['HELP']['LIST_DIR']['main']+'\n')
 
-        elif command.upper() == 'DIR':
-            print(lang['HELP']['LIST_DIR']['main']+'\n')
-
-        elif command.upper() == 'CLS':
+        elif Temp == 'CLS' or Temp == 'CLEAR':
             print(lang['HELP']['CLEAR']['main']+'\n')
 
-        elif command.upper() == 'CLEAR':
-            print(lang['HELP']['CLEAR']['main']+'\n')
-
-        elif command.upper() == 'READ':
+        elif Temp == 'READ' or Temp == 'DUMP':
             print(lang['HELP']['READ']['main']+'\n')
 
-        elif command.upper() == 'DUMP':
-            print(lang['HELP']['READ']['main']+'\n')
-
-        elif command.upper() == 'HOST':
+        elif Temp == 'HOST':
             print(lang['HELP']['HOST_CMD']['main']+'\n')
 
-        elif command.upper() == 'INTEG':
+        elif Temp == 'INTEG' or Temp == 'PKG':
             print(lang['HELP']['PACKAGE']['main']+'\n')
             print('INSTALL        '+lang['HELP']['PACKAGE']['SUB']['install'])
             print('REMOVE         '+lang['HELP']['PACKAGE']['SUB']['remove'])
 
-        elif command.upper() == 'PKG':
-            print(lang['HELP']['PACKAGE']['main']+'\n')
-            print('INSTALL        '+lang['HELP']['PACKAGE']['SUB']['install'])
-            print('REMOVE         '+lang['HELP']['PACKAGE']['SUB']['remove'])
-
-        elif command.upper() == 'EXIT':
+        elif Temp == 'EXIT' or Temp == 'QUIT' or Temp == 'DIE' or Temp == 'END' or Temp == 'ABORT' or Temp == 'ENDCLI' or Temp == 'ABANDON':
             print(lang['HELP']['EXIT']['main']+'\n')
 
-        elif command.upper() == 'QUIT':
-            print(lang['HELP']['EXIT']['main']+'\n')
-
-        elif command.upper() == 'DIE':
-            print(lang['HELP']['EXIT']['main']+'\n')
-
-        elif command.upper() == 'END':
-            print(lang['HELP']['EXIT']['main']+'\n')
-
-        elif command.upper() == 'ABORT':
-            print(lang['HELP']['EXIT']['main']+'\n')
-
-        elif command.upper() == 'ENDCLI':
-            print(lang['HELP']['EXIT']['main']+'\n')
-
-        elif command.upper() == 'ABANDON':
-            print(lang['HELP']['EXIT']['main']+'\n')
-
-        elif command.upper() == 'SYS':
-            print(lang['HELP']['SYSTEM']['main']+'\n')
-            print('RECURSION      '+lang['HELP']['SYSTEM']['SUB']['recursion'])
-
-        elif command.upper() == 'SYSTEM':
+        elif Temp == 'SYS' or Temp == 'SYSTEM':
             print(lang['HELP']['SYSTEM']['main']+'\n')
             print('RECURSION      '+lang['HELP']['SYSTEM']['SUB']['recursion'])
     # end of function
@@ -109,25 +69,17 @@ def cmd():
 
     Temp = usr_in.split(' ', 1)
     if DEBUG:
-        print(usr_in)
-        print(Temp)
-        if DEBUG_LOG:
-            debug_log(usr_in)
-            debug_log(Temp)
-
+        debug_log(usr_in)
+        debug_log(Temp)
 
     if Temp[0] == 'help':
         if 1 < len(Temp):
             if DEBUG:
-                print('Uses arguements')
-                if DEBUG_LOG:
-                    debug_log('Uses arguements')
+                debug_log('Uses arguements')
             commands.Help(Temp[1])
         else:
             if DEBUG:
-                print('Does not use arguements')
-                if DEBUG_LOG:
-                    debug_log('Uses arguements')
+                debug_log('Does not use arguements')
             commands.Help()
 
     elif Temp[0] == 'cd':

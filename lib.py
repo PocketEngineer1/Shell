@@ -21,25 +21,35 @@ def die(error = False, message = "Unknown error!"):
 def log(message, level = 0, Print = True):
     now = datetime.datetime.now()
     if (level == 0):
-        logFile.write('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['0']+': '+message+'\n')
+        logFile.write('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['0']+': '+str(message)+'\n')
         if Print == True:
-            print('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['0']+': '+message)
+            print('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['0']+': '+str(message))
     elif (level == 1):
-        logFile.write('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['1']+': '+message+'\n')
+        logFile.write('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['1']+': '+str(message)+'\n')
         if Print == True:
-            print('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['1']+': '+message)
+            print('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['1']+': '+str(message))
     elif (level == 2):
-        logFile.write('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['2']+': '+message+'\n')
+        logFile.write('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['2']+': '+str(message)+'\n')
         if Print == True:
-            print('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['2']+': '+message)
+            print('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['2']+': '+str(message))
     elif (level == 3):
-        logFile.write('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['3']+': '+message+'\n')
+        logFile.write('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['3']+': '+str(message)+'\n')
         if Print == True:
-            print('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['3']+': '+message)
+            print('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['3']+': '+str(message))
     elif (level == 4):
-        logFile.write('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['4']+': '+message)
+        logFile.write('['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['4']+': '+str(message))
         if Print == True:
-            die(True, '['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['4']+': '+message)
+            die(True, '['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['4']+': '+str(message))
+    else:
+        die(True, 'Invalid logging level!')
+# end of function
+
+def debug_log(message, level = 0, Print = True):
+    now = datetime.datetime.now()
+    if (level == 0):
+        logFile.write('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message)+'\n')
+        if Print == True:
+            print('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message))
     else:
         die(True, 'Invalid logging level!')
 # end of function
