@@ -25,7 +25,7 @@ main="List a directory"
 [HELP.CLEAR]
 main="Clear the terminal screen"
 [HELP.READ]
-main="Dump text file contents to terminal screen"
+main="Dump text file contents to the terminal screen"
 [HELP.HOST_CMD]
 main="Run a command on the host shell"
 [HELP.PACKAGE]
@@ -33,6 +33,8 @@ main="Software integration manager"
 [HELP.PACKAGE.SUB]
 install="Install a package"
 remove="Remove a package"
+[HELP.PRINT]
+main="Write some text to the terminal screen"
 [HELP.EXIT]
 main="Shuts down the program"
 [HELP.SYSTEM]

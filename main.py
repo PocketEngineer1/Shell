@@ -2,7 +2,7 @@ import os, subprocess
 from utils import *
 from lib import *
 
-DEBUG = False
+DEBUG = True
 
 class commands:
     def Help(command=''):
@@ -19,6 +19,11 @@ class commands:
             print('RM             '+lang['HELP']['REMOVE_FILE']['main'])
             print('CLS            '+lang['HELP']['CLEAR']['main'])
             print('CLEAR          '+lang['HELP']['CLEAR']['main'])
+            print('ECHO           '+lang['HELP']['PRINT']['main'])
+            print('PRINT          '+lang['HELP']['PRINT']['main'])
+            print('WRITE          '+lang['HELP']['PRINT']['main'])
+            print('WAIT           '+lang['HELP']['USER_INPUT']['main'])
+            print('INPUT          '+lang['HELP']['USER_INPUT']['main'])
             print('READ           '+lang['HELP']['READ']['main'])
             print('DUMP           '+lang['HELP']['READ']['main'])
             print('HOST           '+lang['HELP']['HOST_CMD']['main'])
@@ -55,6 +60,12 @@ class commands:
         elif Temp == 'CLS' or Temp == 'CLEAR':
             print(lang['HELP']['CLEAR']['main']+'\n')
 
+        elif Temp == 'ECHO' or Temp == 'PRINT' or Temp == 'WRITE':
+            print(lang['HELP']['PRINT']['main']+'\n')
+
+        elif Temp == 'WAIT' or Temp == 'INPUT':
+            print(lang['HELP']['USER_INPUT']['main']+'\n')
+
         elif Temp == 'READ' or Temp == 'DUMP':
             print(lang['HELP']['READ']['main']+'\n')
 
@@ -75,9 +86,16 @@ class commands:
     # end of function
 # end of class
 
+UserStorage = {
+    "APP_DIR": os.path.normpath(os.getcwd()),
+    "HOME_DIR": os.path.normpath(os.path.expanduser('~'))
+}
+
 def cmd():
     Dir = os.path.normpath(os.getcwd())
     usr_in = input(Dir+'>')
+
+    UserStorage['CWD'] = Dir
 
     Temp = usr_in.split(' ', 1)
     if DEBUG:
@@ -118,11 +136,37 @@ def cmd():
         else:
             commands.Help(Temp[0])
 
-    elif Temp[0] == 'integ' or Temp [0]== 'pkg':
+    elif Temp[0] == 'wait' or Temp[0] == 'input':
+        if 1 < len(Temp):
+            UserStorage['usr_in'] = input(Temp[1])
+        else:
+            UserStorage['usr_in'] = input()
+
+    elif Temp[0] == 'set':
+        if 1 < len(Temp):
+            TemP = Temp[1].split(' ', 1)
+            if 2 < len(Temp):
+                UserStorage[Temp[1]] = TemP
+            else:
+                log(lang['ERROR']['missing_arguement'], 3)
+        else:
+            commands.Help(Temp[0])
+
+    elif Temp[0] == 'integ' or Temp[0] == 'pkg':
         if 1 < len(Temp):
             log(lang['ERROR']['missing_command'], 4)
         else:
             commands.Help(Temp[0])
+
+    elif Temp[0] == 'echo' or Temp[0] == 'print' or Temp[0] == 'write':
+        if 1 < len(Temp):
+            if DEBUG:
+                debug_log('Uses arguements')
+            print(Temp[1])
+        else:
+            if DEBUG:
+                debug_log('Does not use arguements')
+            print()
 
     elif Temp[0] == 'host':
         log("It appears that this may not work correctly", 2)

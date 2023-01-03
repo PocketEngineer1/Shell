@@ -9,6 +9,7 @@ existing_path="lang['ERROR']['existing_path']"
 no_command_inputted="lang['ERROR']['no_command_inputted']"
 unknown_command="lang['ERROR']['unknown_command']"
 language_file="lang['ERROR']['language_file']"
+missing_arguement="lang['ERROR']['missing_arguement']"
 
 [COMMAND_OUTPUT]
 [COMMAND_OUTPUT.CLEAR]
@@ -33,6 +34,10 @@ main="lang['HELP']['PACKAGE']['main']"
 [HELP.PACKAGE.SUB]
 install="lang['HELP']['PACKAGE']['SUB']['install']"
 remove="lang['HELP']['PACKAGE']['SUB']['remove']"
+[HELP.PRINT]
+main="lang['HELP']['PRINT']['main']"
+[HELP.USER_INPUT]
+main="lang['HELP']['USER_INPUT']['main']"
 [HELP.EXIT]
 main="lang['HELP']['EXIT']['main']"
 [HELP.SYSTEM]

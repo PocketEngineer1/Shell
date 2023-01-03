@@ -1,7 +1,6 @@
 import os, sys, configparser, datetime, toml
 from utils import *
 
-home_directory = os.path.expanduser( '~' )
 now = datetime.datetime.now()
 
 if (os.path.exists('log/')):
@@ -84,7 +83,7 @@ else:
     raise FileExistsError('Failed to locate fallback language file')
 
 if os.path.exists('./lang/'+config['MAIN']['lang']+'.toml'):
-    Merge(toml.decoder.load('./lang/'+config['MAIN']['lang']+'.toml'), lang)
+    Merge(lang, toml.decoder.load('./lang/'+config['MAIN']['lang']+'.toml'))
 else:
     raise FileExistsError('Failed to locate language file')
 # Language File Handler
