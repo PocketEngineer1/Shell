@@ -2,7 +2,7 @@ import os, subprocess
 from utils import *
 from lib import *
 
-DEBUG = True
+DEBUG = False
 
 class commands:
     def Help(command=''):
@@ -14,6 +14,9 @@ class commands:
             print('CD             '+lang['HELP']['CD']['main'])
             print('LS             '+lang['HELP']['LIST_DIR']['main'])
             print('DIR            '+lang['HELP']['LIST_DIR']['main'])
+            print('RMDIR          '+lang['HELP']['REMOVE_DIRECTORY']['main'])
+            print('MKDIR          '+lang['HELP']['MAKE_DIRECTORY']['main'])
+            print('RM             '+lang['HELP']['REMOVE_FILE']['main'])
             print('CLS            '+lang['HELP']['CLEAR']['main'])
             print('CLEAR          '+lang['HELP']['CLEAR']['main'])
             print('READ           '+lang['HELP']['READ']['main'])
@@ -39,6 +42,15 @@ class commands:
 
         elif Temp == 'LS' or Temp == 'DIR':
             print(lang['HELP']['LIST_DIR']['main']+'\n')
+
+        elif Temp == 'MKDIR':
+            print(lang['HELP']['MAKE_DIRECTORY']['main']+'\n')
+
+        elif Temp == 'RMDIR':
+            print(lang['HELP']['REMOVE_DIRECTORY']['main']+'\n')
+
+        elif Temp == 'RM':
+            print(lang['HELP']['REMOVE_FILE']['main']+'\n')
 
         elif Temp == 'CLS' or Temp == 'CLEAR':
             print(lang['HELP']['CLEAR']['main']+'\n')
@@ -131,7 +143,34 @@ def cmd():
                 log(lang['ERROR']['invalid_path'], 3)
         else:
             commands.Help(Temp[0])
-            
+
+    elif Temp[0] == 'rm':
+        if 1 < len(Temp):
+            if os.path.exists(os.path.normpath(Temp[1])):
+                os.remove(os.path.normpath(Temp[1]))
+            else:
+                log(lang['ERROR']['invalid_path'], 3)
+        else:
+            commands.Help(Temp[0])
+
+    elif Temp[0] == 'rmdir':
+        if 1 < len(Temp):
+            if os.path.exists(os.path.normpath(Temp[1])):
+                os.rmdir(os.path.normpath(Temp[1]))
+            else:
+                log(lang['ERROR']['invalid_path'], 3)
+        else:
+            commands.Help(Temp[0])
+
+    elif Temp[0] == 'mkdir':
+        if 1 < len(Temp):
+            if os.path.exists(os.path.normpath(Temp[1])) == False:
+                os.mkdir(os.path.normpath(Temp[1]))
+            else:
+                log(lang['ERROR']['existing_path'], 3)
+        else:
+            commands.Help(Temp[0])
+
     elif Temp[0] == 'clear' or Temp[0] == 'cls':
         if os.name == 'nt':
             log(lang['COMMAND_OUTPUT']['CLEAR']['main'], 1, False)

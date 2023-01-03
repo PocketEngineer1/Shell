@@ -5,6 +5,7 @@ normal_exit="Program exited normally"
 unknown="Unknown error!"
 missing_command="Missing Command!"
 invalid_path="No such file or directory!"
+existing_path="That file or directory already exists!"
 no_command_inputted="User failed to input command!"
 unknown_command="Invalid command!"
 language_file="There appears to be an issue with the language file!"
@@ -28,7 +29,7 @@ main="Dump text file contents to terminal screen"
 [HELP.HOST_CMD]
 main="Run a command on the host shell"
 [HELP.PACKAGE]
-main="Integration package manager"
+main="Software integration manager"
 [HELP.PACKAGE.SUB]
 install="Install a package"
 remove="Remove a package"

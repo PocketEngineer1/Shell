@@ -5,6 +5,7 @@ normal_exit="lang['GENERAL']['normal_exit']"
 unknown="lang['ERROR']['unknown']"
 missing_command="lang['ERROR']['missing_command']"
 invalid_path="lang['ERROR']['invalid_path']"
+existing_path="lang['ERROR']['existing_path']"
 no_command_inputted="lang['ERROR']['no_command_inputted']"
 unknown_command="lang['ERROR']['unknown_command']"
 language_file="lang['ERROR']['language_file']"
@@ -38,3 +39,9 @@ main="lang['HELP']['EXIT']['main']"
 main="lang['HELP']['SYSTEM']['main']"
 [HELP.SYSTEM.SUB]
 recursion="lang['HELP']['SYSTEM']['SUB']['recursion']"
+[HELP.REMOVE_DIRECTORY]
+main="lang['HELP']['REMOVE_DIRECTORY']['main']"
+[HELP.MAKE_DIRECTORY]
+main="lang['HELP']['MAKE_DIRECTORY']['main']"
+[HELP.REMOVE_FILE]
+main="lang['HELP']['REMOVE_FILE']['main']"
