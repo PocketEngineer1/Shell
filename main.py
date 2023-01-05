@@ -153,15 +153,16 @@ def cmd():
             UserStorage['usr_in'] = input()
 
     elif Temp[0] == 'set':
-        if EXPERIMENTAL:
-            if 1 < len(Temp):
-                TemP = Temp[1].split(' ', 1)
-                if 2 < len(Temp):
-                    UserStorage[Temp[1]] = TemP
-                else:
-                    log(lang['ERROR']['missing_arguement'], 3)
+        if 1 < len(Temp):
+            TemP = Temp[1].split(' ', 1)
+            if 1 < len(TemP):
+                if DEBUG:
+                    debug_log(TemP)
+                UserStorage[TemP[0]] = TemP[1]
             else:
-                commands.Help(Temp[0])
+                log(lang['ERROR']['missing_arguement'], 3)
+        else:
+            commands.Help(Temp[0])
 
     elif Temp[0] == 'integ' or Temp[0] == 'pkg':
         if EXPERIMENTAL:
@@ -250,6 +251,6 @@ def cmd():
 # end of function
 
 print('  _   _       _     __  __            _    _        _____ _          _ _  \n | \ | |     | |   |  \/  |          | |  ( )      / ____| |        | | | \n |  \| | ___ | |_  | \  / | __ _ _ __| | _|/ ___  | (___ | |__   ___| | | \n | . ` |/ _ \| __| | |\/| |/ _` | \'__| |/ / / __|  \___ \| \'_ \ / _ \ | | \n | |\  | (_) | |_  | |  | | (_| | |  |   <  \__ \  ____) | | | |  __/ | | \n |_| \_|\___/ \__| |_|  |_|\__,_|_|  |_|\_\ |___/ |_____/|_| |_|\___|_|_| \n')
-print('Welcome to Shell! A command line shell created by Not Mark, because why not!\nNote: The command set is bit of everything.\n')
+print('Welcome to Not Mark\'s Shell! A command line shell created by Not Mark, because why not!\nNote: The command set is bit of everything.\n')
 cmd()
 die()

@@ -76,8 +76,8 @@ else:
 # Config File Handler
 
 # Language File Handler
-if os.path.exists('./lang/'+config['MAIN']['fallback_lang']+'.toml'):
-    lang = toml.decoder.load('./lang/'+config['MAIN']['fallback_lang']+'.toml')
+if os.path.exists('./lang/'+config['MAIN']['lang']+'.toml'):
+    lang = toml.decoder.load('./lang/'+config['MAIN']['lang']+'.toml')
 else:
     raise FileExistsError('Failed to locate language file')
 # Language File Handler
