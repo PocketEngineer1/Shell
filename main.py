@@ -2,7 +2,8 @@ import os, subprocess
 from utils import *
 from lib import *
 
-DEBUG = True
+DEBUG = False
+EXPERIMENTAL = False
 
 if DEBUG == True:
     debug_log(config)
@@ -117,7 +118,8 @@ def cmd():
             commands.Help()
     
     elif Temp[0] == 'debug':
-        debug_log(UserStorage)
+        if DEBUG:
+            debug_log(UserStorage)
 
     elif Temp[0] == 'cd':
         if 1 < len(Temp):
@@ -138,10 +140,11 @@ def cmd():
             print(os.listdir())
 
     elif Temp[0] == 'sys' or Temp[0] == 'system':
-        if 1 < len(Temp):
-            log(lang['ERROR']['missing_command'], 4)
-        else:
-            commands.Help(Temp[0])
+        if EXPERIMENTAL:
+            if 1 < len(Temp):
+                log(lang['ERROR']['missing_command'], 4)
+            else:
+                commands.Help(Temp[0])
 
     elif Temp[0] == 'wait' or Temp[0] == 'input':
         if 1 < len(Temp):
@@ -150,20 +153,22 @@ def cmd():
             UserStorage['usr_in'] = input()
 
     elif Temp[0] == 'set':
-        if 1 < len(Temp):
-            TemP = Temp[1].split(' ', 1)
-            if 2 < len(Temp):
-                UserStorage[Temp[1]] = TemP
+        if EXPERIMENTAL:
+            if 1 < len(Temp):
+                TemP = Temp[1].split(' ', 1)
+                if 2 < len(Temp):
+                    UserStorage[Temp[1]] = TemP
+                else:
+                    log(lang['ERROR']['missing_arguement'], 3)
             else:
-                log(lang['ERROR']['missing_arguement'], 3)
-        else:
-            commands.Help(Temp[0])
+                commands.Help(Temp[0])
 
     elif Temp[0] == 'integ' or Temp[0] == 'pkg':
-        if 1 < len(Temp):
-            log(lang['ERROR']['missing_command'], 4)
-        else:
-            commands.Help(Temp[0])
+        if EXPERIMENTAL:
+            if 1 < len(Temp):
+                log(lang['ERROR']['missing_command'], 4)
+            else:
+                commands.Help(Temp[0])
 
     elif Temp[0] == 'echo' or Temp[0] == 'print' or Temp[0] == 'write':
         if 1 < len(Temp):
@@ -176,12 +181,13 @@ def cmd():
             print()
 
     elif Temp[0] == 'host':
-        log("It appears that this may not work correctly", 2)
-        if 1 < len(Temp):
-            log(Temp[1], Print=False)
-            subprocess.run(Temp[1])
-        else:
-            commands.Help(Temp[0])
+        if EXPERIMENTAL:
+            log("It appears that this may not work correctly", 2)
+            if 1 < len(Temp):
+                log(Temp[1], Print=False)
+                subprocess.run(Temp[1])
+            else:
+                commands.Help(Temp[0])
 
     elif Temp[0] == 'read' or Temp[0] == 'dump':
         if 1 < len(Temp):
