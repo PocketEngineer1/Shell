@@ -4,6 +4,10 @@ from lib import *
 
 DEBUG = True
 
+if DEBUG == True:
+    debug_log(config)
+    debug_log(lang)
+
 class commands:
     def Help(command=''):
         Temp = command.upper()
@@ -111,6 +115,9 @@ def cmd():
             if DEBUG:
                 debug_log('Does not use arguements')
             commands.Help()
+    
+    elif Temp[0] == 'debug':
+        debug_log(UserStorage)
 
     elif Temp[0] == 'cd':
         if 1 < len(Temp):

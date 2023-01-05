@@ -61,8 +61,7 @@ if (os.path.exists("config.ini")):
 else:
     file = open("config.ini", "a")
     file.write("[MAIN]\n")
-    file.write("lang=en_US\n")
-    file.write("fallback_lang=fallback\n\n")
+    file.write("lang=en_US\n\n")
     file.write("[LOGGING]\n")
     file.write("0=LOG\n")
     file.write("1=INFO\n")
@@ -79,11 +78,6 @@ else:
 # Language File Handler
 if os.path.exists('./lang/'+config['MAIN']['fallback_lang']+'.toml'):
     lang = toml.decoder.load('./lang/'+config['MAIN']['fallback_lang']+'.toml')
-else:
-    raise FileExistsError('Failed to locate fallback language file')
-
-if os.path.exists('./lang/'+config['MAIN']['lang']+'.toml'):
-    Merge(lang, toml.decoder.load('./lang/'+config['MAIN']['lang']+'.toml'))
 else:
     raise FileExistsError('Failed to locate language file')
 # Language File Handler

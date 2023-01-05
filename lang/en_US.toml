@@ -9,6 +9,7 @@ existing_path="That file or directory already exists!"
 no_command_inputted="User failed to input command!"
 unknown_command="Invalid command!"
 language_file="There appears to be an issue with the language file!"
+missing_arguement="Missing command arguement"
 
 [COMMAND_OUTPUT]
 [COMMAND_OUTPUT.CLEAR]
