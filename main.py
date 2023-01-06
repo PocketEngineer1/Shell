@@ -1,4 +1,4 @@
-import os, subprocess, platform
+import os, subprocess, platform,re
 from utils import *
 from lib import *
 
@@ -13,6 +13,13 @@ def REPLACE(Input):
     return y
 
 class commands:
+    def Reference(ScriptPath: str):
+        if os.path.exists(ScriptPath):
+            with open(ScriptPath) as script:
+                for line in script:
+                    debug_log(line)
+                    cmd(line)
+
     def Help(command=''):
         Temp = command.upper()
 
@@ -29,6 +36,8 @@ class commands:
             print('CLEAR          '+lang['HELP']['CLEAR']['main'])
             print('ECHO           '+lang['HELP']['PRINT']['main'])
             print('PRINT          '+lang['HELP']['PRINT']['main'])
+            print('REFERENCE      '+lang['HELP']['REFERENCE_SCRIPT']['main'])
+            print('INCLUDE        '+lang['HELP']['REFERENCE_SCRIPT']['main'])
             print('WAIT           '+lang['HELP']['USER_INPUT']['main'])
             print('INPUT          '+lang['HELP']['USER_INPUT']['main'])
             print('READ           '+lang['HELP']['READ']['main'])
@@ -76,6 +85,9 @@ class commands:
         elif Temp == 'READ' or Temp == 'DUMP':
             print(lang['HELP']['READ']['main']+'\n')
 
+        elif Temp == 'REFERENCE' or Temp == 'INCLUDE':
+            print(lang['HELP']['REFERENCE_SCRIPT']['main']+'\n')
+
         elif Temp == 'HOST':
             print(lang['HELP']['HOST_CMD']['main']+'\n')
 
@@ -100,15 +112,19 @@ UserStorage = {
     "HOSTNAME": str(platform.node())
 }
 
-def cmd():
+def cmd(Input = ''):
     Dir = os.path.normpath(os.getcwd())
     UserStorage['CWD'] = Dir
 
-    usr_in = input(REPLACE(str(config['MAIN']['cmd_txt'])))
+    if Input == '':
+        loop = True
+        Input = input(REPLACE(str(config['MAIN']['cmd_txt'])))
+    else:
+        loop = False
 
-    Temp = usr_in.split(' ', 1)
+    Temp = Input.split(' ', 1)
     Temp[0] = Temp[0].lower()
-    debug_log(usr_in)
+    debug_log(Input)
     debug_log(Temp)
 
     if Temp[0] == 'help':
@@ -125,6 +141,16 @@ def cmd():
             y = REPLACE(Temp[1])
             if os.path.exists(os.path.normpath(y)):
                 os.chdir(os.path.normpath(y))
+            else:
+                log(lang['ERROR']['invalid_path'], 3)
+        else:
+            commands.Help(Temp[0])
+
+    elif Temp[0] == 'reference' or Temp[0] == 'include':
+        if 1 < len(Temp):
+            y = REPLACE(Temp[1])
+            if os.path.exists(os.path.normpath(y)):
+                commands.Reference(y)
             else:
                 log(lang['ERROR']['invalid_path'], 3)
         else:
@@ -159,6 +185,7 @@ def cmd():
             if 1 < len(TemP):
                 debug_log(TemP)
                 y = REPLACE(TemP[1])
+                y = re.sub('\n$', '', y)
 
                 UserStorage[TemP[0]] = y
             else:
@@ -244,14 +271,17 @@ def cmd():
         log(lang['GENERAL']['normal_exit'], 1)
         die()
 
-    elif usr_in == '':
+    elif Temp[0] == '':
         log(lang['ERROR']['no_command_inputted'], 3)
 
     else:
         log(lang['ERROR']['unknown_command'], 3)
 
-    cmd()
+    if loop == True:
+        cmd()
 # end of function
+
+commands.Reference('./autorun.mshell')
 
 print('  _   _       _     __  __            _    _        _____ _          _ _  \n | \ | |     | |   |  \/  |          | |  ( )      / ____| |        | | | \n |  \| | ___ | |_  | \  / | __ _ _ __| | _|/ ___  | (___ | |__   ___| | | \n | . ` |/ _ \| __| | |\/| |/ _` | \'__| |/ / / __|  \___ \| \'_ \ / _ \ | | \n | |\  | (_) | |_  | |  | | (_| | |  |   <  \__ \  ____) | | | |  __/ | | \n |_| \_|\___/ \__| |_|  |_|\__,_|_|  |_|\_\ |___/ |_____/|_| |_|\___|_|_| \n')
 print('Welcome to Not Mark\'s Shell! A command line shell created by Not Mark, because why not!\nNote: The command set is bit of everything.\n')

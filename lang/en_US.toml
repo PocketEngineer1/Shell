@@ -36,6 +36,8 @@ install="Install a package"
 remove="Remove a package"
 [HELP.PRINT]
 main="Write some text to the terminal screen"
+[HELP.REFERENCE_SCRIPT]
+main="Reference a script file (.mshell)"
 [HELP.EXIT]
 main="Shuts down the program"
 [HELP.SYSTEM]
