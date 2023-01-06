@@ -1,4 +1,4 @@
-import os, subprocess
+import os, subprocess, platform
 from utils import *
 from lib import *
 
@@ -88,14 +88,20 @@ class commands:
 
 UserStorage = {
     "APP_DIR": str(os.path.normpath(os.getcwd())),
-    "HOME_DIR": str(os.path.normpath(os.path.expanduser('~')))
+    "HOME_DIR": str(os.path.normpath(os.path.expanduser('~'))),
+    "USER": str(os.getlogin()),
+    "HOSTNAME": str(platform.node())
 }
 
 def cmd():
     Dir = os.path.normpath(os.getcwd())
-    usr_in = input(Dir+'>')
-
     UserStorage['CWD'] = Dir
+
+    y = str(config['MAIN']['cmd_txt'])
+    for x in UserStorage:
+        y = y.replace("<"+x+">", UserStorage[x])
+    debug_log(y)
+    usr_in = input(y)
 
     Temp = usr_in.split(' ', 1)
     Temp[0] = Temp[0].lower()

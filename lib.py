@@ -1,7 +1,7 @@
 import os, sys, configparser, datetime, toml
 from utils import *
 
-DEBUG = False
+DEBUG = True
 EXPERIMENTAL = False
 
 now = datetime.datetime.now()
@@ -65,6 +65,7 @@ if (os.path.exists("config.ini")):
 else:
     file = open("config.ini", "a")
     file.write("[MAIN]\n")
+    file.write("cmd_txt=<CWD>>\n")
     file.write("lang=en_US\n\n")
     file.write("[LOGGING]\n")
     file.write("0=LOG\n")
