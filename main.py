@@ -2,12 +2,8 @@ import os, subprocess
 from utils import *
 from lib import *
 
-DEBUG = False
-EXPERIMENTAL = False
-
-if DEBUG == True:
-    debug_log(config)
-    debug_log(lang)
+debug_log(config)
+debug_log(lang)
 
 class commands:
     def Help(command=''):
@@ -103,9 +99,8 @@ def cmd():
 
     Temp = usr_in.split(' ', 1)
     Temp[0] = Temp[0].lower()
-    if DEBUG:
-        debug_log(usr_in)
-        debug_log(Temp)
+    debug_log(usr_in)
+    debug_log(Temp)
 
     if Temp[0] == 'help':
         if 1 < len(Temp):
@@ -114,16 +109,14 @@ def cmd():
             commands.Help()
     
     elif Temp[0] == 'debug':
-        if DEBUG:
-            debug_log(UserStorage)
+        debug_log(UserStorage)
 
     elif Temp[0] == 'cd':
         if 1 < len(Temp):
             y = str(Temp[1])
             for x in UserStorage:
                 y = y.replace("<"+x+">", UserStorage[x])
-            if DEBUG:
-                debug_log(y)
+            debug_log(y)
 
             if os.path.exists(os.path.normpath(y)):
                 os.chdir(os.path.normpath(y))
@@ -137,8 +130,7 @@ def cmd():
             y = str(Temp[1])
             for x in UserStorage:
                 y = y.replace("<"+x+">", UserStorage[x])
-            if DEBUG:
-                debug_log(y)
+            debug_log(y)
 
             if os.path.exists(os.path.normpath(y)):
                 print(os.listdir(os.path.normpath(y)))
@@ -156,7 +148,13 @@ def cmd():
 
     elif Temp[0] == 'wait' or Temp[0] == 'input':
         if 1 < len(Temp):
-            UserStorage['usr_in'] = input(Temp[1])
+            y = str(Temp[1])
+            for x in UserStorage:
+                y = y.replace("<"+x+">", UserStorage[x])
+            debug_log(y)
+
+        if 1 < len(Temp):
+            UserStorage['usr_in'] = input(y)
         else:
             UserStorage['usr_in'] = input()
 
@@ -164,8 +162,8 @@ def cmd():
         if 1 < len(Temp):
             TemP = Temp[1].split(' ', 1)
             if 1 < len(TemP):
-                if DEBUG:
-                    debug_log(TemP)
+                debug_log(TemP)
+
                 UserStorage[TemP[0]] = TemP[1]
             else:
                 log(lang['ERROR']['missing_arguement'], 3)
@@ -184,8 +182,7 @@ def cmd():
             y = str(Temp[1])
             for x in UserStorage:
                 y = y.replace("<"+x+">", UserStorage[x])
-            if DEBUG:
-                debug_log(y)
+            debug_log(y)
             print(y)
         else:
             print()

@@ -1,6 +1,9 @@
 import os, sys, configparser, datetime, toml
 from utils import *
 
+DEBUG = False
+EXPERIMENTAL = False
+
 now = datetime.datetime.now()
 
 if (os.path.exists('log/')):
@@ -44,13 +47,14 @@ def log(message, level = 0, Print = True):
 # end of function
 
 def debug_log(message, level = 0, Print = True):
-    now = datetime.datetime.now()
-    if (level == 0):
-        logFile.write('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message)+'\n')
-        if Print == True:
-            print('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message))
-    else:
-        die(True, 'Invalid logging level!')
+    if DEBUG:
+        now = datetime.datetime.now()
+        if (level == 0):
+            logFile.write('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message)+'\n')
+            if Print == True:
+                print('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message))
+        else:
+            die(True, 'Invalid logging level!')
 # end of function
 
 # Config File Handler
