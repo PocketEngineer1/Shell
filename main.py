@@ -26,7 +26,6 @@ class commands:
             print('CLEAR          '+lang['HELP']['CLEAR']['main'])
             print('ECHO           '+lang['HELP']['PRINT']['main'])
             print('PRINT          '+lang['HELP']['PRINT']['main'])
-            print('WRITE          '+lang['HELP']['PRINT']['main'])
             print('WAIT           '+lang['HELP']['USER_INPUT']['main'])
             print('INPUT          '+lang['HELP']['USER_INPUT']['main'])
             print('READ           '+lang['HELP']['READ']['main'])
@@ -65,7 +64,7 @@ class commands:
         elif Temp == 'CLS' or Temp == 'CLEAR':
             print(lang['HELP']['CLEAR']['main']+'\n')
 
-        elif Temp == 'ECHO' or Temp == 'PRINT' or Temp == 'WRITE':
+        elif Temp == 'ECHO' or Temp == 'PRINT':
             print(lang['HELP']['PRINT']['main']+'\n')
 
         elif Temp == 'WAIT' or Temp == 'INPUT':
@@ -92,8 +91,8 @@ class commands:
 # end of class
 
 UserStorage = {
-    "APP_DIR": os.path.normpath(os.getcwd()),
-    "HOME_DIR": os.path.normpath(os.path.expanduser('~'))
+    "APP_DIR": str(os.path.normpath(os.getcwd())),
+    "HOME_DIR": str(os.path.normpath(os.path.expanduser('~')))
 }
 
 def cmd():
@@ -103,18 +102,15 @@ def cmd():
     UserStorage['CWD'] = Dir
 
     Temp = usr_in.split(' ', 1)
+    Temp[0] = Temp[0].lower()
     if DEBUG:
         debug_log(usr_in)
         debug_log(Temp)
 
     if Temp[0] == 'help':
         if 1 < len(Temp):
-            if DEBUG:
-                debug_log('Uses arguements')
             commands.Help(Temp[1])
         else:
-            if DEBUG:
-                debug_log('Does not use arguements')
             commands.Help()
     
     elif Temp[0] == 'debug':
@@ -123,8 +119,14 @@ def cmd():
 
     elif Temp[0] == 'cd':
         if 1 < len(Temp):
-            if os.path.exists(os.path.normpath(Temp[1])):
-                os.chdir(os.path.normpath(Temp[1]))
+            y = str(Temp[1])
+            for x in UserStorage:
+                y = y.replace("<"+x+">", UserStorage[x])
+            if DEBUG:
+                debug_log(y)
+
+            if os.path.exists(os.path.normpath(y)):
+                os.chdir(os.path.normpath(y))
             else:
                 log(lang['ERROR']['invalid_path'], 3)
         else:
@@ -132,8 +134,14 @@ def cmd():
 
     elif Temp[0] == 'ls' or Temp[0] == 'dir':
         if 1 < len(Temp):
-            if os.path.exists(os.path.normpath(Temp[1])):
-                print(os.listdir(os.path.normpath(Temp[1])))
+            y = str(Temp[1])
+            for x in UserStorage:
+                y = y.replace("<"+x+">", UserStorage[x])
+            if DEBUG:
+                debug_log(y)
+
+            if os.path.exists(os.path.normpath(y)):
+                print(os.listdir(os.path.normpath(y)))
             else:
                 log(lang['ERROR']['invalid_path'], 3)
         else:
@@ -171,14 +179,15 @@ def cmd():
             else:
                 commands.Help(Temp[0])
 
-    elif Temp[0] == 'echo' or Temp[0] == 'print' or Temp[0] == 'write':
+    elif Temp[0] == 'echo' or Temp[0] == 'print':
         if 1 < len(Temp):
+            y = str(Temp[1])
+            for x in UserStorage:
+                y = y.replace("<"+x+">", UserStorage[x])
             if DEBUG:
-                debug_log('Uses arguements')
-            print(Temp[1])
+                debug_log(y)
+            print(y)
         else:
-            if DEBUG:
-                debug_log('Does not use arguements')
             print()
 
     elif Temp[0] == 'host':
