@@ -5,6 +5,13 @@ from lib import *
 debug_log(config)
 debug_log(lang)
 
+def REPLACE(Input):
+    y = str(Input)
+    for x in UserStorage:
+        y = y.replace("<"+x+">", UserStorage[x])
+    debug_log(y)
+    return y
+
 class commands:
     def Help(command=''):
         Temp = command.upper()
@@ -97,11 +104,7 @@ def cmd():
     Dir = os.path.normpath(os.getcwd())
     UserStorage['CWD'] = Dir
 
-    y = str(config['MAIN']['cmd_txt'])
-    for x in UserStorage:
-        y = y.replace("<"+x+">", UserStorage[x])
-    debug_log(y)
-    usr_in = input(y)
+    usr_in = input(REPLACE(str(config['MAIN']['cmd_txt'])))
 
     Temp = usr_in.split(' ', 1)
     Temp[0] = Temp[0].lower()
@@ -119,11 +122,7 @@ def cmd():
 
     elif Temp[0] == 'cd':
         if 1 < len(Temp):
-            y = str(Temp[1])
-            for x in UserStorage:
-                y = y.replace("<"+x+">", UserStorage[x])
-            debug_log(y)
-
+            y = REPLACE(Temp[1])
             if os.path.exists(os.path.normpath(y)):
                 os.chdir(os.path.normpath(y))
             else:
@@ -133,11 +132,7 @@ def cmd():
 
     elif Temp[0] == 'ls' or Temp[0] == 'dir':
         if 1 < len(Temp):
-            y = str(Temp[1])
-            for x in UserStorage:
-                y = y.replace("<"+x+">", UserStorage[x])
-            debug_log(y)
-
+            y = REPLACE(Temp[1])
             if os.path.exists(os.path.normpath(y)):
                 print(os.listdir(os.path.normpath(y)))
             else:
@@ -154,13 +149,7 @@ def cmd():
 
     elif Temp[0] == 'wait' or Temp[0] == 'input':
         if 1 < len(Temp):
-            y = str(Temp[1])
-            for x in UserStorage:
-                y = y.replace("<"+x+">", UserStorage[x])
-            debug_log(y)
-
-        if 1 < len(Temp):
-            UserStorage['usr_in'] = input(y)
+            UserStorage['usr_in'] = input(REPLACE(Temp[1]))
         else:
             UserStorage['usr_in'] = input()
 
@@ -169,8 +158,9 @@ def cmd():
             TemP = Temp[1].split(' ', 1)
             if 1 < len(TemP):
                 debug_log(TemP)
+                y = REPLACE(TemP[1])
 
-                UserStorage[TemP[0]] = TemP[1]
+                UserStorage[TemP[0]] = y
             else:
                 log(lang['ERROR']['missing_arguement'], 3)
         else:
@@ -185,15 +175,12 @@ def cmd():
 
     elif Temp[0] == 'echo' or Temp[0] == 'print':
         if 1 < len(Temp):
-            y = str(Temp[1])
-            for x in UserStorage:
-                y = y.replace("<"+x+">", UserStorage[x])
-            debug_log(y)
-            print(y)
+            print(REPLACE(Temp[1]))
         else:
             print()
 
     elif Temp[0] == 'host':
+        y = REPLACE(Temp[1])
         if EXPERIMENTAL:
             log("It appears that this may not work correctly", 2)
             if 1 < len(Temp):
@@ -204,9 +191,10 @@ def cmd():
 
     elif Temp[0] == 'read' or Temp[0] == 'dump':
         if 1 < len(Temp):
-            if os.path.exists(os.path.normpath(Temp[1])):
-                if os.path.isfile(os.path.normpath(Temp[1])):
-                    file = open(os.path.normpath(Temp[1]), 'r')
+            y = REPLACE(Temp[1])
+            if os.path.exists(os.path.normpath(y)):
+                if os.path.isfile(os.path.normpath(y)):
+                    file = open(os.path.normpath(y), 'r')
                     print(file.read())
                     file.close()
             else:
@@ -216,8 +204,9 @@ def cmd():
 
     elif Temp[0] == 'rm':
         if 1 < len(Temp):
-            if os.path.exists(os.path.normpath(Temp[1])):
-                os.remove(os.path.normpath(Temp[1]))
+            y = REPLACE(Temp[1])
+            if os.path.exists(os.path.normpath(y)):
+                os.remove(os.path.normpath(y))
             else:
                 log(lang['ERROR']['invalid_path'], 3)
         else:
@@ -225,8 +214,9 @@ def cmd():
 
     elif Temp[0] == 'rmdir':
         if 1 < len(Temp):
-            if os.path.exists(os.path.normpath(Temp[1])):
-                os.rmdir(os.path.normpath(Temp[1]))
+            y = REPLACE(Temp[1])
+            if os.path.exists(os.path.normpath(y)):
+                os.rmdir(os.path.normpath(y))
             else:
                 log(lang['ERROR']['invalid_path'], 3)
         else:
@@ -234,8 +224,9 @@ def cmd():
 
     elif Temp[0] == 'mkdir':
         if 1 < len(Temp):
-            if os.path.exists(os.path.normpath(Temp[1])) == False:
-                os.mkdir(os.path.normpath(Temp[1]))
+            y = REPLACE(Temp[1])
+            if os.path.exists(os.path.normpath(y)) == False:
+                os.mkdir(os.path.normpath(y))
             else:
                 log(lang['ERROR']['existing_path'], 3)
         else:
