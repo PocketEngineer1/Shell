@@ -35,6 +35,14 @@ install="Install a package"
 remove="Remove a package"
 [HELP.PRINT]
 main="Write some text to the terminal screen"
+[HELP.REMOVE_DIRECTORY]
+main="Delete a directory"
+[HELP.MAKE_DIRECTORY]
+main="Create a directory"
+[HELP.REMOVE_FILE]
+main="Delete a file"
+[HELP.USER_INPUT]
+main="Wait for user input"
 [HELP.REFERENCE_SCRIPT]
 main="Reference a script file (.mshell)"
 [HELP.LOGIC]
