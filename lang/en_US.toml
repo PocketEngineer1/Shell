@@ -31,16 +31,17 @@ main="Dump text file contents to the terminal screen"
 main="Run a command on the host shell"
 [HELP.PACKAGE]
 main="Software integration manager"
-[HELP.PACKAGE.SUB]
 install="Install a package"
 remove="Remove a package"
 [HELP.PRINT]
 main="Write some text to the terminal screen"
 [HELP.REFERENCE_SCRIPT]
 main="Reference a script file (.mshell)"
+[HELP.LOGIC]
+main="Logic related stuff"
+if="It's an if statement"
 [HELP.EXIT]
 main="Shuts down the program"
 [HELP.SYSTEM]
 main="Use to configure some system things, be careful!"
-[HELP.SYSTEM.SUB]
-recursion="Set the recursion limit, you probaly don't need to touch this"
+recursion="Set the recursion limit, setting it to a value higher than 1000 is helpful for large scripts"
