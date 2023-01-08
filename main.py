@@ -102,12 +102,12 @@ class commands:
       print('INSTALL        '+lang['HELP']['PACKAGE']['install'])
       print('REMOVE         '+lang['HELP']['PACKAGE']['remove'])
 
-    elif Temp == 'EXIT' or Temp == 'QUIT' or Temp == 'DIE' or Temp == 'END' or Temp == 'ABORT' or Temp == 'ENDCLI' or Temp == 'ABANDON':
-      print(lang['HELP']['EXIT']['main']+'\n')
-
     elif Temp == 'SYS' or Temp == 'SYSTEM':
       print(lang['HELP']['SYSTEM']['main']+'\n')
       print('RECURSION      '+lang['HELP']['SYSTEM']['recursion'])
+
+    elif Temp == 'EXIT' or Temp == 'QUIT' or Temp == 'DIE' or Temp == 'END' or Temp == 'ABORT' or Temp == 'ENDCLI' or Temp == 'ABANDON':
+      print(lang['HELP']['EXIT']['main']+'\n')
   # end of function
 # end of class
 
@@ -129,7 +129,9 @@ def cmd(Input = ''):
     loop = False
 
   Temp = Input.split(' ', 1)
-  Temp[0] = Temp[0].lower()
+  TMp = str(Temp[0])
+  TMp = TMp.lower()
+  Temp[0] = TMp
   debug_log(Input)
   debug_log(Temp)
 
@@ -189,8 +191,8 @@ def cmd(Input = ''):
     if 1 < len(Temp):
       TemP = Temp[1].split(' ', 1)
       if 1 < len(TemP):
-        if EXPERIMENTAL:
-          if TemP[0].lower() == 'if':
+        if TemP[0].lower() == 'if':
+          if EXPERIMENTAL:
             TEmp = TemP[1].split(' ', 1)
             if 1 < len(TEmp):
               TeMp = TEmp[1].split(' ', 1)
