@@ -2,7 +2,6 @@ import os, sys, configparser, datetime, toml
 from utils import *
 
 DEBUG = False
-EXPERIMENTAL = False
 
 now = datetime.datetime.now()
 

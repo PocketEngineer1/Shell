@@ -175,11 +175,10 @@ def cmd(Input = ''):
       print(os.listdir())
 
   elif Temp[0] == 'sys' or Temp[0] == 'system':
-    if EXPERIMENTAL:
-      if 1 < len(Temp):
-        log(lang['ERROR']['missing_command'], 4)
-      else:
-        commands.Help(Temp[0])
+    if 1 < len(Temp):
+      log(lang['ERROR']['missing_command'], 4)
+    else:
+      commands.Help(Temp[0])
 
   elif Temp[0] == 'wait' or Temp[0] == 'input':
     if 1 < len(Temp):
@@ -194,6 +193,10 @@ def cmd(Input = ''):
         if TemP[0].lower() == 'if':
           temp = TemP[1].split(' ', 2)
           if 2 < len(temp):
+            debug_log(temp)
+            temp[0] = REPLACE(temp[0])
+            temp[1] = REPLACE(temp[1])
+            temp[2] = REPLACE(temp[2])
             debug_log(temp)
             if temp[0] == temp[1]:
               cmd(temp[2])
@@ -220,11 +223,10 @@ def cmd(Input = ''):
       commands.Help(Temp[0])
 
   elif Temp[0] == 'integ' or Temp[0] == 'pkg':
-    if EXPERIMENTAL:
-      if 1 < len(Temp):
-        log(lang['ERROR']['missing_command'], 4)
-      else:
-        commands.Help(Temp[0])
+    if 1 < len(Temp):
+      log(lang['ERROR']['missing_command'], 4)
+    else:
+      commands.Help(Temp[0])
 
   elif Temp[0] == 'echo' or Temp[0] == 'print':
     if 1 < len(Temp):
@@ -234,13 +236,12 @@ def cmd(Input = ''):
 
   elif Temp[0] == 'host':
     y = REPLACE(Temp[1])
-    if EXPERIMENTAL:
-      log("It appears that this may not work correctly", 2)
-      if 1 < len(Temp):
-        log(Temp[1], Print=False)
-        subprocess.run(Temp[1])
-      else:
-        commands.Help(Temp[0])
+    log("It appears that this may not work correctly", 2)
+    if 1 < len(Temp):
+      log(Temp[1], Print=False)
+      subprocess.run(Temp[1])
+    else:
+      commands.Help(Temp[0])
 
   elif Temp[0] == 'read' or Temp[0] == 'dump':
     if 1 < len(Temp):
