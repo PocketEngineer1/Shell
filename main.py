@@ -1,4 +1,4 @@
-import os, subprocess, platform,re
+import os, subprocess, platform, re
 from utils import *
 from lib import *
 
@@ -192,28 +192,13 @@ def cmd(Input = ''):
       TemP = Temp[1].split(' ', 1)
       if 1 < len(TemP):
         if TemP[0].lower() == 'if':
-          if EXPERIMENTAL:
-            TEmp = TemP[1].split(' ', 1)
-            if 1 < len(TEmp):
-              TeMp = TEmp[1].split(' ', 1)
-              if 1 < len(TeMp):
-                TEMp = TeMp[1].split(' ', 1)
-                if 1 < len(TEMp):
-                  x = REPLACE(TEmp[1])
-                  z = REPLACE(TeMp[1])
-                  w = REPLACE(TEMp[1])
-                  debug_log(x)
-                  debug_log(z)
-                  debug_log(w)
-
-                  if x == z:
-                    cmd(w)
-                else:
-                  log(lang['ERROR']['missing_arguement'], 3)
-              else:
-                log(lang['ERROR']['missing_arguement'], 3)
+          temp = TemP[1].split(' ', 2)
+          if 2 < len(temp):
+            debug_log(temp)
+            if temp[0] == temp[1]:
+              cmd(temp[2])
             else:
-              log(lang['ERROR']['missing_arguement'], 3)
+              commands.Help(Temp[0])
           else:
             commands.Help(Temp[0])
         else:
