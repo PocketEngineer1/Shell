@@ -43,7 +43,7 @@ def log(message, level = 0, Print = True):
             die(True, '['+now.strftime("%H:%M:%S")+'] '+config['LOGGING']['4']+': '+str(message))
     else:
         die(True, 'Invalid logging level!')
-# end of function
+# end
 
 def debug_log(message, level = 0, Print = True):
     if DEBUG:
@@ -54,7 +54,22 @@ def debug_log(message, level = 0, Print = True):
                 print('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message))
         else:
             die(True, 'Invalid logging level!')
-# end of function
+# end
+
+# System Config File Handler
+if (os.path.exists("system.ini")):
+    system_conf = configparser.ConfigParser()
+    system_conf.sections()
+    system_conf.read('system.ini')
+else:
+    file = open("system.ini", "a")
+    file.write("[MAIN]\n")
+    file.write("recursion=1000\n\n")
+    file.close()
+    system_conf = configparser.ConfigParser()
+    system_conf.sections()
+    system_conf.read('system.ini')
+# System Config File Handler
 
 # Config File Handler
 if (os.path.exists("config.ini")):
@@ -85,3 +100,8 @@ if os.path.exists('./lang/'+config['MAIN']['lang']+'.toml'):
 else:
     raise FileExistsError('Failed to locate language file')
 # Language File Handler
+
+def debug_die():
+    if DEBUG != True:
+        die()
+# end

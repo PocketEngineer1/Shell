@@ -20,6 +20,7 @@ class commands:
         for line in script:
           debug_log(line)
           cmd(line)
+  # end
 
   def Help(command=''):
     Temp = command.upper()
@@ -108,8 +109,17 @@ class commands:
 
     elif Temp == 'EXIT' or Temp == 'QUIT' or Temp == 'DIE' or Temp == 'END' or Temp == 'ABORT' or Temp == 'ENDCLI' or Temp == 'ABANDON':
       print(lang['HELP']['EXIT']['main']+'\n')
-  # end of function
-# end of class
+  # end
+
+  class system:
+    def recursion(limit: int):
+      sys.setrecursionlimit(limit)
+      system_conf['MAIN']['recursion'] = str(limit)
+      with open('system.ini', 'w') as conf:
+        system_conf.write(conf)
+    # end
+  # end
+# end
 
 UserStorage = {
   "APP_DIR": str(os.path.normpath(os.getcwd())),
@@ -175,8 +185,14 @@ def cmd(Input = ''):
       print(os.listdir())
 
   elif Temp[0] == 'sys' or Temp[0] == 'system':
+    debug_die()
     if 1 < len(Temp):
-      log(lang['ERROR']['missing_command'], 4)
+      TEmp = Input.split(' ', 1)
+      if 1 < len(TEmp):
+        if TEmp[0] == 'recursion':
+          commands.system.recursion(TEmp[1])
+      else:
+        commands.Help(Temp[0])
     else:
       commands.Help(Temp[0])
 
@@ -223,6 +239,7 @@ def cmd(Input = ''):
       commands.Help(Temp[0])
 
   elif Temp[0] == 'integ' or Temp[0] == 'pkg':
+    debug_die()
     if 1 < len(Temp):
       log(lang['ERROR']['missing_command'], 4)
     else:
@@ -235,6 +252,7 @@ def cmd(Input = ''):
       print()
 
   elif Temp[0] == 'host':
+    debug_die()
     y = REPLACE(Temp[1])
     log("It appears that this may not work correctly", 2)
     if 1 < len(Temp):
@@ -311,6 +329,6 @@ def cmd(Input = ''):
 commands.Reference('./autorun.mshell')
 
 print('  _   _       _     __  __            _    _        _____ _          _ _  \n | \ | |     | |   |  \/  |          | |  ( )      / ____| |        | | | \n |  \| | ___ | |_  | \  / | __ _ _ __| | _|/ ___  | (___ | |__   ___| | | \n | . ` |/ _ \| __| | |\/| |/ _` | \'__| |/ / / __|  \___ \| \'_ \ / _ \ | | \n | |\  | (_) | |_  | |  | | (_| | |  |   <  \__ \  ____) | | | |  __/ | | \n |_| \_|\___/ \__| |_|  |_|\__,_|_|  |_|\_\ |___/ |_____/|_| |_|\___|_|_| \n')
-print('Welcome to Not Mark\'s Shell! A command line shell created by Not Mark, because why not!\nNote: The command set is bit of everything.\n')
+print('Welcome to Not Mark\'s Shell! A command line shell created by Not Mark, because why not!\n')
 cmd()
 die()
