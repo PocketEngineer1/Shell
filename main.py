@@ -182,7 +182,7 @@ def cmd(Input = ''):
       else:
         log(lang['ERROR']['invalid_path'], 3)
     else:
-      commands.Help(Temp[0])
+      commands.Help([Temp[0]])
 
   elif Temp[0] == 'reference' or Temp[0] == 'include':
     if 1 < len(Temp):
@@ -192,7 +192,7 @@ def cmd(Input = ''):
       else:
         log(lang['ERROR']['invalid_path'], 3)
     else:
-      commands.Help(Temp[0])
+      commands.Help([Temp[0]])
 
   elif Temp[0] == 'ls' or Temp[0] == 'dir':
     if 1 < len(Temp):
@@ -211,10 +211,8 @@ def cmd(Input = ''):
       if 1 < len(TEmp):
         if TEmp[0] == 'recursion':
           commands.system.recursion(TEmp[1])
-      else:
-        commands.Help(Temp[0])
     else:
-      commands.Help(Temp[0])
+      commands.Help([Temp[0]])
 
   elif Temp[0] == 'wait' or Temp[0] == 'input':
     if 1 < len(Temp):
@@ -236,14 +234,10 @@ def cmd(Input = ''):
             debug_log(temp)
             if temp[0] == temp[1]:
               cmd(temp[2])
-            else:
-              commands.Help(Temp[0])
-          else:
-            commands.Help(Temp[0])
         else:
           log(lang['ERROR']['missing_arguement'], 3)
       else:
-        commands.Help(Temp[0])
+        commands.Help([Temp[0]])
 
   elif Temp[0] == 'set':
     if 1 < len(Temp):
@@ -256,14 +250,14 @@ def cmd(Input = ''):
       else:
         log(lang['ERROR']['missing_arguement'], 3)
     else:
-      commands.Help(Temp[0])
+      commands.Help([Temp[0]])
 
   elif Temp[0] == 'integ' or Temp[0] == 'pkg':
     debug_die()
     if 1 < len(Temp):
       log(lang['ERROR']['missing_command'], 4)
     else:
-      commands.Help(Temp[0])
+      commands.Help([Temp[0]])
 
   elif Temp[0] == 'echo' or Temp[0] == 'print':
     if 1 < len(Temp):
@@ -279,7 +273,7 @@ def cmd(Input = ''):
       log(Temp[1], Print=False)
       subprocess.run(Temp[1])
     else:
-      commands.Help(Temp[0])
+      commands.Help([Temp[0]])
 
   elif Temp[0] == 'read' or Temp[0] == 'dump':
     if 1 < len(Temp):
@@ -292,7 +286,7 @@ def cmd(Input = ''):
         else:
           log(lang['ERROR']['invalid_path'], 3)
       else:
-        commands.Help(Temp[0])
+        commands.Help([Temp[0]])
 
   elif Temp[0] == 'rm':
     if 1 < len(Temp):
@@ -302,7 +296,7 @@ def cmd(Input = ''):
       else:
         log(lang['ERROR']['invalid_path'], 3)
     else:
-      commands.Help(Temp[0])
+      commands.Help([Temp[0]])
 
   elif Temp[0] == 'rmdir':
     if 1 < len(Temp):
@@ -312,7 +306,7 @@ def cmd(Input = ''):
       else:
         log(lang['ERROR']['invalid_path'], 3)
     else:
-      commands.Help(Temp[0])
+      commands.Help([Temp[0]])
 
   elif Temp[0] == 'mkdir':
     if 1 < len(Temp):
@@ -322,7 +316,7 @@ def cmd(Input = ''):
       else:
         log(lang['ERROR']['existing_path'], 3)
     else:
-      commands.Help(Temp[0])
+      commands.Help([Temp[0]])
 
   elif Temp[0] == 'clear' or Temp[0] == 'cls':
     if os.name == 'nt':
