@@ -22,10 +22,82 @@ class commands:
           cmd(line)
   # end
 
-  def Help(command=''):
-    Temp = command.upper()
+  def Help(Input: list):
+    if 0 < len(Input):
+      Input[0] = Input[0].upper()
 
-    if Temp == '':
+      if Input[0] == 'HELP':
+        print(lang['HELP']['HELP']['main']+'\n')
+
+      elif Input[0] == 'CD':
+        print(lang['HELP']['CD']['main']+'\n')
+
+      elif Input[0] == 'LS' or Input[0] == 'DIR':
+        print(lang['HELP']['LIST_DIR']['main']+'\n')
+
+      elif Input[0] == 'RMDIR':
+        print(lang['HELP']['REMOVE_DIRECTORY']['main']+'\n')
+
+      elif Input[0] == 'MKDIR':
+        print(lang['HELP']['MAKE_DIRECTORY']['main']+'\n')
+
+      elif Input[0] == 'RM':
+        print(lang['HELP']['REMOVE_FILE']['main']+'\n')
+
+      elif Input[0] == 'CLS' or Input[0] == 'CLEAR':
+        print(lang['HELP']['CLEAR']['main']+'\n')
+
+      elif Input[0] == 'PRINT' or Input[0] == 'ECHO':
+        print(lang['HELP']['PRINT']['main']+'\n')
+
+      elif Input[0] == 'REFERENCE' or Input[0] == 'INCLUDE':
+        print(lang['HELP']['REFERENCE_SCRIPT']['main']+'\n')
+
+      elif Input[0] == 'WAIT' or Input[0] == 'INPUT':
+        print(lang['HELP']['USER_INPUT']['main']+'\n')
+
+      elif Input[0] == 'READ' or Input[0] == 'DUMP':
+        print(lang['HELP']['READ']['main']+'\n')
+
+      elif Input[0] == 'LOGIC':
+        if 1 < len(Input):
+          Input[1] = Input[1].upper()
+
+          if Input[1] == 'IF':
+            print(lang['HELP']['LOGIC']['if']+'\n')
+
+        else:
+          print(lang['HELP']['LOGIC']['main']+'\n')
+
+      elif Input[0] == 'HOST':
+        print(lang['HELP']['HOST_CMD']['main']+'\n')
+
+      elif Input[0] == 'INTEG' or Input[0] == 'PKG':
+        if 1 < len(Input):
+          Input[1] = Input[1].upper()
+
+          if Input[1] == 'INSTALL':
+            print(lang['HELP']['PACKAGE']['install']+'\n')
+
+          elif Input[1] == 'REMOVE':
+            print(lang['HELP']['PACKAGE']['remove']+'\n')
+
+        else:
+          print(lang['HELP']['PACKAGE']['main']+'\n')
+
+      elif Input[0] == 'EXIT' or Input[0] == 'QUIT' or Input[0] == 'DIE' or Input[0] == 'END' or Input[0] == 'ABORT' or Input[0] == 'ENDCLI' or Input[0] == 'ABANDON':
+        print(lang['HELP']['EXIT']['main']+'\n')
+
+      elif Input[0] == 'SYS' or Input[0] == 'SYSTEM':
+        if 1 < len(Input):
+          Input[1] = Input[1].upper()
+
+          if Input[1] == 'RECURSION':
+            print(lang['HELP']['SYSTEM']['recursion']+'\n')
+        else:
+          print(lang['HELP']['SYSTEM']['main']+'\n')
+
+    else:
       print(lang['HELP']['more_info']+'\n')
       print('HELP           '+lang['HELP']['HELP']['main'])
       print('CD             '+lang['HELP']['CD']['main'])
@@ -57,58 +129,6 @@ class commands:
       print('ABANDON        '+lang['HELP']['EXIT']['main'])
       print('SYS            '+lang['HELP']['SYSTEM']['main'])
       print('SYSTEM         '+lang['HELP']['SYSTEM']['main'])
-
-    elif Temp == 'HELP':
-      print(lang['HELP']['HELP']['main']+'\n')
-
-    elif Temp == 'CD':
-      print(lang['HELP']['CD']['main']+'\n')
-
-    elif Temp == 'LS' or Temp == 'DIR':
-      print(lang['HELP']['LIST_DIR']['main']+'\n')
-
-    elif Temp == 'MKDIR':
-      print(lang['HELP']['MAKE_DIRECTORY']['main']+'\n')
-
-    elif Temp == 'RMDIR':
-      print(lang['HELP']['REMOVE_DIRECTORY']['main']+'\n')
-
-    elif Temp == 'RM':
-      print(lang['HELP']['REMOVE_FILE']['main']+'\n')
-
-    elif Temp == 'CLS' or Temp == 'CLEAR':
-      print(lang['HELP']['CLEAR']['main']+'\n')
-
-    elif Temp == 'ECHO' or Temp == 'PRINT':
-      print(lang['HELP']['PRINT']['main']+'\n')
-
-    elif Temp == 'WAIT' or Temp == 'INPUT':
-      print(lang['HELP']['USER_INPUT']['main']+'\n')
-
-    elif Temp == 'READ' or Temp == 'DUMP':
-      print(lang['HELP']['READ']['main']+'\n')
-
-    elif Temp == 'REFERENCE' or Temp == 'INCLUDE':
-      print(lang['HELP']['REFERENCE_SCRIPT']['main']+'\n')
-
-    elif Temp == 'HOST':
-      print(lang['HELP']['HOST_CMD']['main']+'\n')
-
-    elif Temp == 'LOGIC':
-      print(lang['HELP']['LOGIC']['main']+'\n')
-      print('IF             '+lang['HELP']['LOGIC']['if'])
-
-    elif Temp == 'INTEG' or Temp == 'PKG':
-      print(lang['HELP']['PACKAGE']['main']+'\n')
-      print('INSTALL        '+lang['HELP']['PACKAGE']['install'])
-      print('REMOVE         '+lang['HELP']['PACKAGE']['remove'])
-
-    elif Temp == 'SYS' or Temp == 'SYSTEM':
-      print(lang['HELP']['SYSTEM']['main']+'\n')
-      print('RECURSION      '+lang['HELP']['SYSTEM']['recursion'])
-
-    elif Temp == 'EXIT' or Temp == 'QUIT' or Temp == 'DIE' or Temp == 'END' or Temp == 'ABORT' or Temp == 'ENDCLI' or Temp == 'ABANDON':
-      print(lang['HELP']['EXIT']['main']+'\n')
   # end
 
   class system:
@@ -147,10 +167,10 @@ def cmd(Input = ''):
 
   if Temp[0] == 'help':
     if 1 < len(Temp):
-      commands.Help(Temp[1])
+      commands.Help(Temp[1].split(' '))
     else:
-      commands.Help()
-    
+      commands.Help([])
+
   elif Temp[0] == 'debug':
     debug_log(UserStorage)
 
