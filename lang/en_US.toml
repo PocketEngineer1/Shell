@@ -47,7 +47,7 @@ main="Wait for user input"
 main="Reference a script file (.mshell)"
 [HELP.LOGIC]
 main="Logic related stuff"
-if="Check if to values the same"
+if="Check if two values the same"
 [HELP.EXIT]
 main="Shuts down the program"
 [HELP.SYSTEM]
