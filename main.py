@@ -238,6 +238,8 @@ def cmd(Input = ''):
           log(lang['ERROR']['missing_arguement'], 3)
       else:
         commands.Help([Temp[0]])
+    else:
+      commands.Help([Temp[0]])
 
   elif Temp[0] == 'set':
     if 1 < len(Temp):
