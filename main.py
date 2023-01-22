@@ -177,30 +177,41 @@ def cmd(Input = ''):
   elif Temp[0] == 'cd':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.path.exists(os.path.normpath(y)):
-        os.chdir(os.path.normpath(y))
+      if os.access(y, os.R_OK) == True:
+        if os.path.exists(os.path.normpath(y)):
+          os.chdir(os.path.normpath(y))
+        else:
+          log(lang['ERROR']['PATH']['invalid'], 3)
       else:
-        log(lang['ERROR']['invalid_path'], 3)
+        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
     else:
       commands.Help([Temp[0]])
 
   elif Temp[0] == 'reference' or Temp[0] == 'include':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.path.exists(os.path.normpath(y)):
-        commands.Reference(y)
+      if os.access(y, os.R_OK) == True:
+        if os.path.exists(os.path.normpath(y)):
+          commands.Reference(os.path.normpath(y))
+        else:
+          log(lang['ERROR']['PATH']['invalid'], 3)
       else:
-        log(lang['ERROR']['invalid_path'], 3)
+        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
     else:
       commands.Help([Temp[0]])
 
   elif Temp[0] == 'ls' or Temp[0] == 'dir':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.path.exists(os.path.normpath(y)):
-        print(os.listdir(os.path.normpath(y)))
+      if os.access(y, os.W_OK) == True:
+        if os.path.exists(os.path.normpath(y)):
+          os.listdir(os.path.normpath(y))
+        else:
+          log(lang['ERROR']['PATH']['invalid'], 3)
+      elif os.access(y, os.R_OK) == True:
+        log(lang['ERROR']['PRIVILEGE']['read_only'], 3)
       else:
-        log(lang['ERROR']['invalid_path'], 3)
+        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
     else:
       print(os.listdir())
 
@@ -280,43 +291,66 @@ def cmd(Input = ''):
   elif Temp[0] == 'read' or Temp[0] == 'dump':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.path.exists(os.path.normpath(y)):
-        if os.path.isfile(os.path.normpath(y)):
-          file = open(os.path.normpath(y), 'r')
-          print(file.read())
-          file.close()
+      if os.access(y, os.R_OK) == True:
+        if os.path.exists(os.path.normpath(y)):
+          if os.path.isfile(os.path.normpath(y)):
+            file = open(os.path.normpath(y), 'r')
+            print(file.read())
+            file.close()
+          else:
+            log(lang['ERROR']['PATH']['not_file'], 3)
         else:
-          log(lang['ERROR']['invalid_path'], 3)
+          log(lang['ERROR']['PATH']['invalid'], 3)
       else:
-        commands.Help([Temp[0]])
+        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
+    else:
+      commands.Help([Temp[0]])
 
   elif Temp[0] == 'rm':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.path.exists(os.path.normpath(y)):
-        os.remove(os.path.normpath(y))
+      if os.access(y, os.W_OK) == True:
+        if os.path.exists(os.path.normpath(y)):
+          if os.path.isfile(y):
+            os.remove(os.path.normpath(y))
+          else:
+            log(lang['ERROR']['PATH']['not_file'], 3)
+        else:
+          log(lang['ERROR']['PATH']['invalid'], 3)
+      elif os.access(y, os.R_OK) == True:
+        log(lang['ERROR']['PRIVILEGE']['read_only'], 3)
       else:
-        log(lang['ERROR']['invalid_path'], 3)
+        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
     else:
       commands.Help([Temp[0]])
 
   elif Temp[0] == 'rmdir':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.path.exists(os.path.normpath(y)):
-        os.rmdir(os.path.normpath(y))
+      if os.access(y, os.W_OK) == True:
+        if os.path.exists(os.path.normpath(y)):
+          os.rmdir(os.path.normpath(y))
+        else:
+          log(lang['ERROR']['PATH']['invalid'], 3)
+      elif os.access(y, os.R_OK) == True:
+        log(lang['ERROR']['PRIVILEGE']['read_only'], 3)
       else:
-        log(lang['ERROR']['invalid_path'], 3)
+        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
     else:
       commands.Help([Temp[0]])
 
   elif Temp[0] == 'mkdir':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.path.exists(os.path.normpath(y)) == False:
-        os.mkdir(os.path.normpath(y))
+      if os.access(Dir, os.W_OK) == True:
+        if os.path.exists(os.path.normpath(y)) == False:
+          os.mkdir(os.path.normpath(y))
+        else:
+          log(lang['ERROR']['PATH']['invalid'], 3)
+      elif os.access(y, os.R_OK) == True:
+        log(lang['ERROR']['PRIVILEGE']['read_only'], 3)
       else:
-        log(lang['ERROR']['existing_path'], 3)
+        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
     else:
       commands.Help([Temp[0]])
 
