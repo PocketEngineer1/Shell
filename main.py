@@ -130,15 +130,6 @@ class commands:
       print('SYS            '+lang['HELP']['SYSTEM']['main'])
       print('SYSTEM         '+lang['HELP']['SYSTEM']['main'])
   # end
-
-  class system:
-    def recursion(limit: int):
-      sys.setrecursionlimit(limit)
-      system_conf['MAIN']['recursion'] = str(limit)
-      with open('system.ini', 'w') as conf:
-        system_conf.write(conf)
-    # end
-  # end
 # end
 
 UserStorage = {
@@ -153,10 +144,7 @@ def cmd(Input = ''):
   UserStorage['CWD'] = Dir
 
   if Input == '':
-    loop = True
     Input = input(REPLACE(str(config['MAIN']['cmd_txt'])))
-  else:
-    loop = False
 
   Temp = Input.split(' ', 1)
   TMp = str(Temp[0])
@@ -177,53 +165,46 @@ def cmd(Input = ''):
   elif Temp[0] == 'cd':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.access(y, os.R_OK) == True:
-        if os.path.exists(os.path.normpath(y)):
-          os.chdir(os.path.normpath(y))
+      if os.path.exists(os.path.normpath(y)):
+        if os.access(os.path.normpath(y), os.R_OK):
+          if os.path.isdir(os.path.normpath(y)):
+            os.chdir(os.path.normpath(y))
+          else:
+            log(lang['ERROR']['PATH']['not_dir'], 3)
         else:
-          log(lang['ERROR']['PATH']['invalid'], 3)
+          log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
       else:
-        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
+        log(lang['ERROR']['PATH']['invalid'], 3)
     else:
       commands.Help([Temp[0]])
 
   elif Temp[0] == 'reference' or Temp[0] == 'include':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.access(y, os.R_OK) == True:
-        if os.path.exists(os.path.normpath(y)):
+      if os.path.exists(os.path.normpath(y)):
+        if os.access(os.path.normpath(y), os.R_OK):
           commands.Reference(os.path.normpath(y))
         else:
-          log(lang['ERROR']['PATH']['invalid'], 3)
+          log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
       else:
-        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
+        log(lang['ERROR']['PATH']['invalid'], 3)
     else:
       commands.Help([Temp[0]])
 
   elif Temp[0] == 'ls' or Temp[0] == 'dir':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.access(y, os.W_OK) == True:
-        if os.path.exists(os.path.normpath(y)):
+      if os.path.exists(os.path.normpath(y)):
+        if os.access(os.path.normpath(y), os.W_OK) == True:
           os.listdir(os.path.normpath(y))
+        elif os.access(os.path.normpath(y), os.R_OK) == True:
+          log(lang['ERROR']['PRIVILEGE']['read_only'], 3)
         else:
-          log(lang['ERROR']['PATH']['invalid'], 3)
-      elif os.access(y, os.R_OK) == True:
-        log(lang['ERROR']['PRIVILEGE']['read_only'], 3)
+          log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
       else:
-        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
+        log(lang['ERROR']['PATH']['invalid'], 3)
     else:
       print(os.listdir())
-
-  elif Temp[0] == 'sys' or Temp[0] == 'system':
-    debug_die()
-    if 1 < len(Temp):
-      TEmp = Input.split(' ', 1)
-      if 1 < len(TEmp):
-        if TEmp[0] == 'recursion':
-          commands.system.recursion(TEmp[1])
-    else:
-      commands.Help([Temp[0]])
 
   elif Temp[0] == 'wait' or Temp[0] == 'input':
     if 1 < len(Temp):
@@ -291,8 +272,8 @@ def cmd(Input = ''):
   elif Temp[0] == 'read' or Temp[0] == 'dump':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.access(y, os.R_OK) == True:
-        if os.path.exists(os.path.normpath(y)):
+      if os.path.exists(os.path.normpath(y)):
+        if os.access(os.path.normpath(y), os.R_OK) == True:
           if os.path.isfile(os.path.normpath(y)):
             file = open(os.path.normpath(y), 'r')
             print(file.read())
@@ -300,42 +281,42 @@ def cmd(Input = ''):
           else:
             log(lang['ERROR']['PATH']['not_file'], 3)
         else:
-          log(lang['ERROR']['PATH']['invalid'], 3)
+          log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
       else:
-        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
+        log(lang['ERROR']['PATH']['invalid'], 3)
     else:
       commands.Help([Temp[0]])
 
   elif Temp[0] == 'rm':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.access(y, os.W_OK) == True:
-        if os.path.exists(os.path.normpath(y)):
-          if os.path.isfile(y):
+      if os.path.exists(os.path.normpath(y)):
+        if os.access(os.path.normpath(y), os.W_OK) == True:
+          if os.path.isfile(os.path.normpath(y)):
             os.remove(os.path.normpath(y))
           else:
             log(lang['ERROR']['PATH']['not_file'], 3)
+        elif os.access(os.path.normpath(y), os.R_OK) == True:
+          log(lang['ERROR']['PRIVILEGE']['read_only'], 3)
         else:
-          log(lang['ERROR']['PATH']['invalid'], 3)
-      elif os.access(y, os.R_OK) == True:
-        log(lang['ERROR']['PRIVILEGE']['read_only'], 3)
+          log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
       else:
-        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
+        log(lang['ERROR']['PATH']['invalid'], 3)
     else:
       commands.Help([Temp[0]])
 
   elif Temp[0] == 'rmdir':
     if 1 < len(Temp):
       y = REPLACE(Temp[1])
-      if os.access(y, os.W_OK) == True:
-        if os.path.exists(os.path.normpath(y)):
+      if os.path.exists(os.path.normpath(y)):
+        if os.access(os.path.normpath(y), os.W_OK) == True:
           os.rmdir(os.path.normpath(y))
+        elif os.access(os.path.normpath(y), os.R_OK) == True:
+          log(lang['ERROR']['PRIVILEGE']['read_only'], 3)
         else:
-          log(lang['ERROR']['PATH']['invalid'], 3)
-      elif os.access(y, os.R_OK) == True:
-        log(lang['ERROR']['PRIVILEGE']['read_only'], 3)
+          log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
       else:
-        log(lang['ERROR']['PRIVILEGE']['forbidden'], 3)
+        log(lang['ERROR']['PATH']['invalid'], 3)
     else:
       commands.Help([Temp[0]])
 
@@ -372,13 +353,15 @@ def cmd(Input = ''):
   else:
     log(lang['ERROR']['unknown_command'], 3)
 
-  if loop == True:
-    cmd()
-# end of function
+  cmd()
+# end
 
 commands.Reference('./autorun.mshell')
 
 print('  _   _       _     __  __            _    _        _____ _          _ _  \n | \ | |     | |   |  \/  |          | |  ( )      / ____| |        | | | \n |  \| | ___ | |_  | \  / | __ _ _ __| | _|/ ___  | (___ | |__   ___| | | \n | . ` |/ _ \| __| | |\/| |/ _` | \'__| |/ / / __|  \___ \| \'_ \ / _ \ | | \n | |\  | (_) | |_  | |  | | (_| | |  |   <  \__ \  ____) | | | |  __/ | | \n |_| \_|\___/ \__| |_|  |_|\__,_|_|  |_|\_\ |___/ |_____/|_| |_|\___|_|_| \n')
 print('Welcome to Not Mark\'s Shell! A command line shell created by Not Mark, because why not!\n')
-cmd()
+
+if __name__ == 'main':
+  cmd()
+
 die()

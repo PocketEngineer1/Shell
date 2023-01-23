@@ -55,6 +55,3 @@ main="Logic related stuff"
 if="Check if two values the same"
 [HELP.EXIT]
 main="Shuts down the program"
-[HELP.SYSTEM]
-main="Use to configure some system things, be careful!"
-recursion="Set the recursion limit, setting it to a value higher than 1000 is helpful for large scripts"

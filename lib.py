@@ -5,19 +5,19 @@ DEBUG = False
 
 now = datetime.datetime.now()
 
-if (os.path.exists('log/')):
+if os.path.exists('log/'):
     logFile = open("log/"+now.strftime("%Y %m %d %H %M %S")+".log", "a")
 else:
     os.mkdir('log')
     logFile = open("log/"+now.strftime("%Y %m %d %H %M %S")+".log", "a")
-# end of if else satement
+# end
 
 def die(error = False, message = "Unknown error!"):
     logFile.close()
     if error == True:
         sys.exit(message)
     sys.exit()
-# end of function
+# end
 
 def log(message, level = 0, Print = True):
     now = datetime.datetime.now()
@@ -55,21 +55,6 @@ def debug_log(message, level = 0, Print = True):
         else:
             die(True, 'Invalid logging level!')
 # end
-
-# System Config File Handler
-if (os.path.exists("system.ini")):
-    system_conf = configparser.ConfigParser()
-    system_conf.sections()
-    system_conf.read('system.ini')
-else:
-    file = open("system.ini", "a")
-    file.write("[MAIN]\n")
-    file.write("recursion=1000\n\n")
-    file.close()
-    system_conf = configparser.ConfigParser()
-    system_conf.sections()
-    system_conf.read('system.ini')
-# System Config File Handler
 
 # Config File Handler
 if (os.path.exists("config.ini")):
