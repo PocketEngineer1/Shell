@@ -1,17 +1,9 @@
-import os, subprocess, platform, re
-from utils import *
+import os, subprocess
+from integ import *
 from lib import *
 
-debug_log(config)
-debug_log(lang)
-
-def REPLACE(Input: str):
-  y = str(Input)
-  for x in UserStorage:
-    y = y.replace("<"+x+">", UserStorage[x])
-  y = re.sub('\n$', '', y)
-  debug_log(y)
-  return y
+exec(open('lib.py').read())
+exec(open('integ.py').read())
 
 class commands:
   def Reference(ScriptPath: str):
@@ -131,13 +123,6 @@ class commands:
       print('SYSTEM         '+lang['HELP']['SYSTEM']['main'])
   # end
 # end
-
-UserStorage = {
-  "APP_DIR": str(os.path.normpath(os.getcwd())),
-  "HOME_DIR": str(os.path.normpath(os.path.expanduser('~'))),
-  "USER": str(os.getlogin()),
-  "HOSTNAME": str(platform.node())
-}
 
 def cmd(Input = ''):
   Dir = os.path.normpath(os.getcwd())
@@ -335,6 +320,11 @@ def cmd(Input = ''):
     else:
       commands.Help([Temp[0]])
 
+  elif Temp[0] == 'test':
+    for i in os.listdir(REPLACE('<APP_DIR>')+'/INTEG'):
+      if os.path.isdir(os.path.normpath(REPLACE('<APP_DIR>')+'/INTEG/'+i)):
+        print(i)
+
   elif Temp[0] == 'clear' or Temp[0] == 'cls':
     if os.name == 'nt':
       log(lang['COMMAND_OUTPUT']['CLEAR']['main'], 1, False)
@@ -356,12 +346,13 @@ def cmd(Input = ''):
   cmd()
 # end
 
-commands.Reference('./autorun.mshell')
-
-print('  _   _       _     __  __            _    _        _____ _          _ _  \n | \ | |     | |   |  \/  |          | |  ( )      / ____| |        | | | \n |  \| | ___ | |_  | \  / | __ _ _ __| | _|/ ___  | (___ | |__   ___| | | \n | . ` |/ _ \| __| | |\/| |/ _` | \'__| |/ / / __|  \___ \| \'_ \ / _ \ | | \n | |\  | (_) | |_  | |  | | (_| | |  |   <  \__ \  ____) | | | |  __/ | | \n |_| \_|\___/ \__| |_|  |_|\__,_|_|  |_|\_\ |___/ |_____/|_| |_|\___|_|_| \n')
-print('Welcome to Not Mark\'s Shell! A command line shell created by Not Mark, because why not!\n')
-
-if __name__ == 'main':
+def main():
+  print('  _   _       _     __  __            _    _        _____ _          _ _  \n | \ | |     | |   |  \/  |          | |  ( )      / ____| |        | | | \n |  \| | ___ | |_  | \  / | __ _ _ __| | _|/ ___  | (___ | |__   ___| | | \n | . ` |/ _ \| __| | |\/| |/ _` | \'__| |/ / / __|  \___ \| \'_ \ / _ \ | | \n | |\  | (_) | |_  | |  | | (_| | |  |   <  \__ \  ____) | | | |  __/ | | \n |_| \_|\___/ \__| |_|  |_|\__,_|_|  |_|\_\ |___/ |_____/|_| |_|\___|_|_| \n')
+  print('Welcome to Not Mark\'s Shell! A command line shell created by Not Mark, because why not!\n')
+  commands.Reference('./autorun.mshell')
   cmd()
+
+if __name__ == '__main__' or __name__ == 'main':
+  main()
 
 die()
