@@ -327,8 +327,16 @@ def cmd(Input = ''):
           if os.path.isdir(os.path.normpath(REPLACE('<APP_DIR>')+'/INTEG/'+i)):
             print(i)
       elif Temp[1] == 'integ':
-        if os.path.isdir(os.path.normpath(REPLACE('<APP_DIR>')+'/INTEG/'+i)):
-          print
+        for i in os.listdir(REPLACE('<APP_DIR>')+'/INTEG'):
+          if os.path.isdir(REPLACE('<APP_DIR>')+'/INTEG/'+i):
+            if os.path.exists(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml'):
+              integ_config = toml.decoder.load(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml')
+              print(integ_config)
+              
+              spec = importlib.util.spec_from_file_location(i, REPLACE('<APP_DIR>')+'/INTEG/'+i+'/'+integ_config['MAIN']['script'])
+              module = importlib.util.module_from_spec(spec)
+              spec.loader.exec_module(module)
+              module.main()
       else:
         file_path = os.path.normpath(REPLACE('<APP_DIR>')+'/INTEG/'+i)
         module_name = i
@@ -370,4 +378,4 @@ def main():
 if __name__ == '__main__' or __name__ == 'main':
   main()
 
-die()
+die ()
