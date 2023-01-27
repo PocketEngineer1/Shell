@@ -1,9 +1,36 @@
-import os, subprocess, importlib.util, sys
-from integ import *
+import os, subprocess, importlib.util
 from lib import *
 
 exec(open('lib.py').read())
-exec(open('integ.py').read())
+
+INTEG_Storage = {}
+
+class INTEG:
+  def load():
+    for i in os.listdir(REPLACE('<APP_DIR>')+'/INTEG'):
+      if os.path.isdir(REPLACE('<APP_DIR>')+'/INTEG/'+i):
+        if os.path.exists(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml'):
+          integ_config = toml.decoder.load(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml')
+          # print(integ_config)
+              
+          spec = importlib.util.spec_from_file_location(i, REPLACE('<APP_DIR>')+'/INTEG/'+i+'/'+integ_config['MAIN']['script'])
+          module = importlib.util.module_from_spec(spec)
+          # print(module)
+          spec.loader.exec_module(module)
+          module.main()
+
+          INTEG_Storage[i] = {
+            'config': integ_config,
+            'module': module,
+            'lang': {}
+          }
+
+          if os.path.exists(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang'):
+            for w in os.listdir(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang'):
+              INTEG_Storage[i]['lang'][os.path.splitext(w)[0]] = toml.decoder.load(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang/'+w)
+    print(INTEG_Storage)
+  # end
+# end
 
 class commands:
   def Reference(ScriptPath: str):
@@ -327,16 +354,18 @@ def cmd(Input = ''):
           if os.path.isdir(os.path.normpath(REPLACE('<APP_DIR>')+'/INTEG/'+i)):
             print(i)
       elif Temp[1] == 'integ':
-        for i in os.listdir(REPLACE('<APP_DIR>')+'/INTEG'):
-          if os.path.isdir(REPLACE('<APP_DIR>')+'/INTEG/'+i):
-            if os.path.exists(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml'):
-              integ_config = toml.decoder.load(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml')
-              print(integ_config)
+        INTEG.load()
+        # for i in os.listdir(REPLACE('<APP_DIR>')+'/INTEG'):
+        #   if os.path.isdir(REPLACE('<APP_DIR>')+'/INTEG/'+i):
+        #     if os.path.exists(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml'):
+        #       integ_config = toml.decoder.load(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml')
+        #       print(integ_config)
               
-              spec = importlib.util.spec_from_file_location(i, REPLACE('<APP_DIR>')+'/INTEG/'+i+'/'+integ_config['MAIN']['script'])
-              module = importlib.util.module_from_spec(spec)
-              spec.loader.exec_module(module)
-              module.main()
+        #       spec = importlib.util.spec_from_file_location(i, REPLACE('<APP_DIR>')+'/INTEG/'+i+'/'+integ_config['MAIN']['script'])
+        #       module = importlib.util.module_from_spec(spec)
+        #       print(module)
+        #       spec.loader.exec_module(module)
+        #       module.main()
       else:
         file_path = os.path.normpath(REPLACE('<APP_DIR>')+'/INTEG/'+i)
         module_name = i
@@ -370,12 +399,15 @@ def cmd(Input = ''):
 # end
 
 def main():
+  if os.path.exists('INTEG') == False:
+    os.mkdir('INTEG')
   print('  _   _       _     __  __            _    _        _____ _          _ _  \n | \ | |     | |   |  \/  |          | |  ( )      / ____| |        | | | \n |  \| | ___ | |_  | \  / | __ _ _ __| | _|/ ___  | (___ | |__   ___| | | \n | . ` |/ _ \| __| | |\/| |/ _` | \'__| |/ / / __|  \___ \| \'_ \ / _ \ | | \n | |\  | (_) | |_  | |  | | (_| | |  |   <  \__ \  ____) | | | |  __/ | | \n |_| \_|\___/ \__| |_|  |_|\__,_|_|  |_|\_\ |___/ |_____/|_| |_|\___|_|_| \n')
   print('Welcome to Not Mark\'s Shell! A command line shell created by Not Mark, because why not!\n')
+  INTEG.load() 
   commands.Reference('./autorun.mshell')
   cmd()
 
 if __name__ == '__main__' or __name__ == 'main':
   main()
 
-die ()
+die()
