@@ -11,13 +11,10 @@ class INTEG:
       if os.path.isdir(REPLACE('<APP_DIR>')+'/INTEG/'+i):
         if os.path.exists(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml'):
           integ_config = toml.decoder.load(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml')
-          # print(integ_config)
               
           spec = importlib.util.spec_from_file_location(i, REPLACE('<APP_DIR>')+'/INTEG/'+i+'/'+integ_config['MAIN']['script'])
           module = importlib.util.module_from_spec(spec)
-          # print(module)
           spec.loader.exec_module(module)
-          module.main()
 
           INTEG_Storage[i] = {
             'config': integ_config,
@@ -28,7 +25,8 @@ class INTEG:
           if os.path.exists(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang'):
             for w in os.listdir(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang'):
               INTEG_Storage[i]['lang'][os.path.splitext(w)[0]] = toml.decoder.load(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang/'+w)
-    print(INTEG_Storage)
+    if config['MAIN']['lang'] in INTEG_Storage[i]['lang']:
+      lang.update(INTEG_Storage[i]['lang'][config['MAIN']['lang']])
   # end
 # end
 
@@ -173,6 +171,8 @@ def cmd(Input = ''):
 
   elif Temp[0] == 'debug':
     debug_log(UserStorage)
+    debug_log(INTEG_Storage)
+    debug_log(lang)
 
   elif Temp[0] == 'cd':
     if 1 < len(Temp):
