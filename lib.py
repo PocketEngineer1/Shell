@@ -1,6 +1,6 @@
 import os, sys, configparser, datetime, toml, platform, re
 
-DEBUG = True
+DEBUG = False
 
 if __name__ == '__main__' or __name__ == 'main':
   now = datetime.datetime.now()

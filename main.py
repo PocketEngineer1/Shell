@@ -11,7 +11,7 @@ class INTEG:
       if os.path.isdir(REPLACE('<APP_DIR>')+'/INTEG/'+i):
         if os.path.exists(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml'):
           integ_config = toml.decoder.load(REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml')
-              
+
           spec = importlib.util.spec_from_file_location(i, REPLACE('<APP_DIR>')+'/INTEG/'+i+'/'+integ_config['MAIN']['script'])
           module = importlib.util.module_from_spec(spec)
           spec.loader.exec_module(module)
@@ -19,6 +19,8 @@ class INTEG:
           INTEG_Storage[i] = {
             'config': integ_config,
             'module': module,
+            'aliases': integ_config['MAIN']['aliases'],
+            'dir': REPLACE('<APP_DIR>')+'/INTEG',
             'lang': {}
           }
 
@@ -79,10 +81,8 @@ class commands:
       elif Input[0] == 'LOGIC':
         if 1 < len(Input):
           Input[1] = Input[1].upper()
-
           if Input[1] == 'IF':
             print(lang['HELP']['LOGIC']['if']+'\n')
-
         else:
           print(lang['HELP']['LOGIC']['main']+'\n')
 
@@ -92,13 +92,10 @@ class commands:
       elif Input[0] == 'INTEG' or Input[0] == 'PKG':
         if 1 < len(Input):
           Input[1] = Input[1].upper()
-
           if Input[1] == 'INSTALL':
             print(lang['HELP']['PACKAGE']['install']+'\n')
-
           elif Input[1] == 'REMOVE':
             print(lang['HELP']['PACKAGE']['remove']+'\n')
-
         else:
           print(lang['HELP']['PACKAGE']['main']+'\n')
 
@@ -108,7 +105,6 @@ class commands:
       elif Input[0] == 'SYS' or Input[0] == 'SYSTEM':
         if 1 < len(Input):
           Input[1] = Input[1].upper()
-
           if Input[1] == 'RECURSION':
             print(lang['HELP']['SYSTEM']['recursion']+'\n')
         else:
@@ -385,17 +381,23 @@ def cmd(Input = ''):
       log(lang['COMMAND_OUTPUT']['CLEAR']['main'], 1, False)
       subprocess.run("clear")
 
-  elif Temp[0] == 'exit' or Temp[0] == 'quit' or Temp[0] == 'die' or Temp[0] == 'end' or Temp[0] == 'abort' or Temp[0] == 'abandon':
-    log(lang['GENERAL']['normal_exit'], 1)
-    die()
+  for k in INTEG_Storage:
+    for t in INTEG_Storage[k]['aliases']:
+      if Temp[0] == t.lower():
+        INTEG_Storage[k]['module'].main(Temp)
+        return
+    
+    if Temp[0] == 'exit' or Temp[0] == 'quit' or Temp[0] == 'die' or Temp[0] == 'end' or Temp[0] == 'abort' or Temp[0] == 'abandon':
+      log(lang['GENERAL']['normal_exit'], 1)
+      die()
 
-  elif Temp[0] == '':
-    log(lang['ERROR']['no_command_inputted'], 3)
+    elif Temp[0] == '':
+      log(lang['ERROR']['no_command_inputted'], 3)
+      return
 
-  else:
-    log(lang['ERROR']['unknown_command'], 3)
-
-  cmd()
+    else:
+      log(lang['ERROR']['unknown_command'], 3)
+      return
 # end
 
 def main():
@@ -405,7 +407,8 @@ def main():
   print('Welcome to Not Mark\'s Shell! A command line shell created by Not Mark, because why not!\n')
   INTEG.load() 
   commands.Reference('./autorun.mshell')
-  cmd()
+  while True:
+    cmd()
 
 if __name__ == '__main__' or __name__ == 'main':
   main()
