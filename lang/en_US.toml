@@ -50,8 +50,5 @@ main="Delete a file"
 main="Wait for user input"
 [HELP.REFERENCE_SCRIPT]
 main="Reference a script file (.mshell)"
-[HELP.LOGIC]
-main="Logic related stuff"
-if="Check if two values the same"
 [HELP.EXIT]
 main="Shuts down the program"
