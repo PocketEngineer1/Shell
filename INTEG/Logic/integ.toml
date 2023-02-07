@@ -3,3 +3,4 @@ version=[0, 0, 0]
 # depends=["Main"]
 aliases=["logic"] # Commands
 script="integ.py" # Main script
+help="help" # Help command registration # Failed to translate JSON to TOML
