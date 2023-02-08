@@ -10,7 +10,7 @@ data.Storage = {
 
 data.config = lib.Handler.Config()
 data.lang = lib.Handler.Lang()
-data.logFile = lib.Handler.Log()
+# data.logFile = lib.Handler.Log()
 
 def main():
   if os.path.exists('INTEG') == False:
