@@ -2,6 +2,14 @@ import os, configparser, datetime, toml
 import data, functions
 
 class Handler:
+  def Lang():
+    if os.path.exists('./lang/'+data.config['MAIN']['lang']+'.toml'):
+      lang = toml.decoder.load('./lang/'+data.config['MAIN']['lang']+'.toml')
+    else:
+      raise FileExistsError('Failed to locate language file')
+    return lang
+  # end
+  
   def Config():
     if (os.path.exists("config.ini")):
       config = configparser.ConfigParser()
@@ -26,14 +34,6 @@ class Handler:
     return config
   # end
 
-  def Lang():
-    if os.path.exists('./lang/'+data.config['MAIN']['lang']+'.toml'):
-      lang = toml.decoder.load('./lang/'+data.config['MAIN']['lang']+'.toml')
-    else:
-      raise FileExistsError('Failed to locate language file')
-    return lang
-  # end
-
   def Log():
     now = datetime.datetime.now()
     if os.path.exists('log/'):
@@ -42,4 +42,4 @@ class Handler:
       os.mkdir('log')
       logFile = open("log/"+now.strftime("%Y %m %d %H %M %S")+".log", "a")
     return logFile
-  # end
+  # end  
