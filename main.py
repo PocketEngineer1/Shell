@@ -1,4 +1,4 @@
-import os, configparser, toml, platform
+import os, platform
 import commands, data, integ, functions, lib
 
 data.Storage = {
@@ -7,10 +7,6 @@ data.Storage = {
   "USER": str(os.getlogin()),
   "HOSTNAME": str(platform.node())
 }
-
-data.config = lib.Handler.Config()
-data.lang = lib.Handler.Lang()
-# data.logFile = lib.Handler.Log()
 
 def main():
   if os.path.exists('INTEG') == False:

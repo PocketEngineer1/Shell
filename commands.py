@@ -1,6 +1,5 @@
 import os
-import data
-from functions import *
+import data, functions
 
 def Help(Input: list):
   if 0 < len(Input):
@@ -108,4 +107,4 @@ def Reference(ScriptPath: str):
   if os.path.exists(ScriptPath):
     with open(ScriptPath) as script:
       for line in script:
-        cmd(line)
+        functions.cmd(line)

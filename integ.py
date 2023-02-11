@@ -1,4 +1,4 @@
-import toml, importlib.util, os, json
+import toml, importlib.util, os
 import data, functions
 
 def load():
@@ -22,10 +22,6 @@ def load():
         if os.path.exists(functions.REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang'):
           for w in os.listdir(functions.REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang'):
             data.INTEG_Storage[i]['lang'][os.path.splitext(w)[0]] = toml.decoder.load(functions.REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang/'+w)
-
-        if os.path.exists(functions.REPLACE('<APP_DIR>')+'/INTEG/help.json'):
-          data.INTEG_Storage[i]['help'] = json.loads(functions.REPLACE('<APP_DIR>')+'/INTEG/help.json')
-
   if data.config['MAIN']['lang'] in data.INTEG_Storage[i]['lang']:
     data.lang.update(data.INTEG_Storage[i]['lang'][data.config['MAIN']['lang']])
 # end
