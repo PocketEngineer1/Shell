@@ -16,13 +16,18 @@ def load():
           'module': module,
           'aliases': integ_config['MAIN']['aliases'],
           'dir': functions.REPLACE('<APP_DIR>')+'/INTEG',
-          'lang': {}
+          'lang': {},
+          'help': {}
         }
-        if os.path.exists(functions.REPLACE('<APP_DIR>')+'/INTEG/help.json'):
-          data.INTEG_Storage[i]['help'] = json.loads(functions.REPLACE('<APP_DIR>')+'/INTEG/help.json')
-        if os.path.exists(functions.REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang'):
-          for w in os.listdir(functions.REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang'):
-            data.INTEG_Storage[i]['lang'][os.path.splitext(w)[0]] = toml.decoder.load(functions.REPLACE('<APP_DIR>')+'/INTEG/'+i+'/lang/'+w)
+
+        if os.path.exists(data.INTEG_Storage[i]['dir']+'/help.json'):
+          with open(data.INTEG_Storage[i]['dir']+'/help.json', 'r') as JsonFile:
+            data.INTEG_Storage[i]['help'] = json.loads(JsonFile.read())
+          
+        if os.path.exists(data.INTEG_Storage[i]['dir']+'/lang'):
+          for w in os.listdir(data.INTEG_Storage[i]['dir']+'/lang'):
+            data.INTEG_Storage[i]['lang'][os.path.splitext(w)[0]] = toml.decoder.load(data.INTEG_Storage[i]['dir']+'/lang/'+w)
+            
   if data.config['MAIN']['lang'] in data.INTEG_Storage[i]['lang']:
     data.lang.update(data.INTEG_Storage[i]['lang'][data.config['MAIN']['lang']])
 # end
