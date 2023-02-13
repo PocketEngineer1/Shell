@@ -59,9 +59,7 @@ def cmd(Input = ''):
       commands.Help(Temp[1].split(' '))
     else:
       commands.Help([])
-
-  elif Temp[0] == 'debug':
-    ...
+    return
 
   elif Temp[0] == 'cd':
     if 1 < len(Temp):
@@ -78,6 +76,7 @@ def cmd(Input = ''):
         log(data.lang['ERROR']['PATH']['invalid'], 3)
     else:
       commands.Help([Temp[0]])
+    return
 
   elif Temp[0] == 'reference' or Temp[0] == 'include':
     if 1 < len(Temp):
@@ -91,6 +90,7 @@ def cmd(Input = ''):
         log(data.lang['ERROR']['PATH']['invalid'], 3)
     else:
       commands.Help([Temp[0]])
+    return
 
   elif Temp[0] == 'ls' or Temp[0] == 'dir':
     if 1 < len(Temp):
@@ -106,12 +106,14 @@ def cmd(Input = ''):
         log(data.lang['ERROR']['PATH']['invalid'], 3)
     else:
       print(os.listdir())
+    return
 
   elif Temp[0] == 'wait' or Temp[0] == 'input':
     if 1 < len(Temp):
       data.Storage['usr_in'] = input(REPLACE(Temp[1]))
     else:
       data.Storage['usr_in'] = input()
+    return
 
   elif Temp[0] == 'set':
     if 1 < len(Temp):
@@ -124,18 +126,21 @@ def cmd(Input = ''):
         log(data.lang['ERROR']['missing_arguement'], 3)
     else:
       commands.Help([Temp[0]])
+    return
 
   elif Temp[0] == 'integ' or Temp[0] == 'pkg':
     if 1 < len(Temp):
       log(data.lang['ERROR']['missing_command'], 4)
     else:
       commands.Help([Temp[0]])
+    return
 
   elif Temp[0] == 'echo' or Temp[0] == 'print':
     if 1 < len(Temp):
       print(REPLACE(Temp[1]))
     else:
       print()
+    return
 
   elif Temp[0] == 'host':
     y = REPLACE(Temp[1])
@@ -145,6 +150,7 @@ def cmd(Input = ''):
       subprocess.run(Temp[1])
     else:
       commands.Help([Temp[0]])
+    return
 
   elif Temp[0] == 'read' or Temp[0] == 'dump':
     if 1 < len(Temp):
@@ -163,6 +169,7 @@ def cmd(Input = ''):
         log(data.lang['ERROR']['PATH']['invalid'], 3)
     else:
       commands.Help([Temp[0]])
+    return
 
   elif Temp[0] == 'rm':
     if 1 < len(Temp):
@@ -181,6 +188,7 @@ def cmd(Input = ''):
         log(data.lang['ERROR']['PATH']['invalid'], 3)
     else:
       commands.Help([Temp[0]])
+    return
 
   elif Temp[0] == 'rmdir':
     if 1 < len(Temp):
@@ -196,6 +204,7 @@ def cmd(Input = ''):
         log(data.lang['ERROR']['PATH']['invalid'], 3)
     else:
       commands.Help([Temp[0]])
+    return
 
   elif Temp[0] == 'mkdir':
     if 1 < len(Temp):
@@ -211,6 +220,7 @@ def cmd(Input = ''):
         log(data.lang['ERROR']['PRIVILEGE']['forbidden'], 3)
     else:
       commands.Help([Temp[0]])
+    return
 
   elif Temp[0] == 'test':
     if 1 < len(Temp):
@@ -230,6 +240,7 @@ def cmd(Input = ''):
 
         # Verify contents of the module:
         print(dir(module))
+    return
 
   elif Temp[0] == 'clear' or Temp[0] == 'cls':
     if os.name == 'nt':
@@ -238,23 +249,23 @@ def cmd(Input = ''):
     else:
       log(data.lang['COMMAND_OUTPUT']['CLEAR']['main'], 1, False)
       subprocess.run("clear")
+    return
 
   for k in data.INTEG_Storage:
     for t in data.INTEG_Storage[k]['aliases']:
       if Temp[0] == t.lower():
-        # print(data.INTEG_Storage[k]['module'])
         data.INTEG_Storage[k]['module'].integ(Temp)
         return
 
-    if Temp[0] == 'exit' or Temp[0] == 'quit' or Temp[0] == 'die' or Temp[0] == 'end' or Temp[0] == 'abort' or Temp[0] == 'abandon':
-      log(data.lang['GENERAL']['normal_exit'], 1)
-      die()
+      elif Temp[0] == 'exit' or Temp[0] == 'quit' or Temp[0] == 'die' or Temp[0] == 'end' or Temp[0] == 'abort' or Temp[0] == 'abandon':
+        log(data.lang['GENERAL']['normal_exit'], 1)
+        die()
 
-    elif Temp[0] == '':
-      log(data.lang['ERROR']['no_command_inputted'], 3)
-      return
+      elif Temp[0] == '':
+        log(data.lang['ERROR']['no_command_inputted'], 3)
+        return
 
-    else:
-      log(data.lang['ERROR']['unknown_command'], 3)
-      return
+      else:
+        log(data.lang['ERROR']['unknown_command'], 3)
+        return
 # end

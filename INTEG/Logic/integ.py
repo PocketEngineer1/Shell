@@ -1,5 +1,4 @@
-from functions import *
-import data
+import data, functions
 
 def integ(input: list):
   if input[0] == 'logic':
@@ -9,14 +8,14 @@ def integ(input: list):
         if TemP[0].lower() == 'if':
           temp = TemP[1].split(' ', 2)
           if 2 < len(temp):
-            temp[0] = REPLACE(temp[0])
-            temp[1] = REPLACE(temp[1])
-            temp[2] = REPLACE(temp[2])
+            temp[0] = functions.REPLACE(temp[0])
+            temp[1] = functions.REPLACE(temp[1])
+            temp[2] = functions.REPLACE(temp[2])
             if temp[0] == temp[1]:
-              cmd(temp[2])
+              functions.cmd(temp[2])
         else:
-          log(data.lang['ERROR']['missing_arguement'], 3)
+          functions.log(data.lang['ERROR']['missing_arguement'], 3)
       else:
-        commands.Help([input[0], TemP[0]])
+        functions.commands.Help([input[0], TemP[0]])
     else:
-      commands.Help([input[0]])
+      functions.commands.Help([input[0]])
