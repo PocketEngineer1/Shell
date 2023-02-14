@@ -26,7 +26,7 @@ def load():
           
         if os.path.exists(data.INTEG_Storage[i]['dir']+'/lang'):
           for w in os.listdir(data.INTEG_Storage[i]['dir']+'/lang'):
-            data.INTEG_Storage[i]['lang'][os.path.splitext(w)[0]] = toml.decoder.load(data.INTEG_Storage[i]['dir']+'/lang/'+w)
+            data.INTEG_Storage[i]['lang'][w.split('.toml')[0]] = toml.decoder.load(data.INTEG_Storage[i]['dir']+'/lang/'+w)
 
         if data.config['MAIN']['lang'] in data.INTEG_Storage[i]['lang']:
           data.lang.update(data.INTEG_Storage[i]['lang'][data.config['MAIN']['lang']])

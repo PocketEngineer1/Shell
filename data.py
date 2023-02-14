@@ -1,6 +1,6 @@
 import lib
 
-DEBUG = False
+DEBUG = True
 INTEG_Storage = {}
 config = lib.Handler.Config()
 lang = lib.Handler.Lang()

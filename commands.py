@@ -2,6 +2,7 @@ import os
 import data, functions
 
 def Help(Input: list):
+  print(data.lang)
   if 0 < len(Input):
     Input[0] = Input[0].upper()
 
@@ -12,8 +13,7 @@ def Help(Input: list):
           Tmp = 'data.lang'
           for k in Temp:
             Tmp += '[\''+k+'\']'
-          exec('Tmp = '+Tmp)
-          print(Tmp)
+          exec('print('+Tmp+')')
           del Temp, Tmp
 
   #   if Input[0] == 'HELP':
