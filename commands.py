@@ -2,7 +2,7 @@ import os
 import data, functions
 
 def Help(Input: list):
-  print(data.lang)
+  functions.log(data.lang)
   if 0 < len(Input):
     Input[0] = Input[0].upper()
 

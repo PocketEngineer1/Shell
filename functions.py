@@ -11,25 +11,25 @@ def die(error = False, message = "Unknown error!"):
 def log(message, level = 0, Print = True):
   now = datetime.datetime.now()
   if (level == 0):
-    data.logFile.write('['+now.strftime("%H:%M:%S")+'] '+data.config['LOGGING']['0']+': '+str(message)+'\n')
+    data.logFile.write('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message)+'\n')
     if Print == True:
-      print('['+now.strftime("%H:%M:%S")+'] '+data.config['LOGGING']['0']+': '+str(message))
+      print('['+now.strftime("%H:%M:%S")+'] DEBUG: '+str(message))
   elif (level == 1):
-    data.logFile.write('['+now.strftime("%H:%M:%S")+'] '+data.config['LOGGING']['1']+': '+str(message)+'\n')
+    data.logFile.write('['+now.strftime("%H:%M:%S")+'] INFO: '+str(message)+'\n')
     if Print == True:
-      print('['+now.strftime("%H:%M:%S")+'] '+data.config['LOGGING']['1']+': '+str(message))
+      print('['+now.strftime("%H:%M:%S")+'] INFO: '+str(message))
   elif (level == 2):
-    data.logFile.write('['+now.strftime("%H:%M:%S")+'] '+data.config['LOGGING']['2']+': '+str(message)+'\n')
+    data.logFile.write('['+now.strftime("%H:%M:%S")+'] WARN: '+str(message)+'\n')
     if Print == True:
-      print('['+now.strftime("%H:%M:%S")+'] '+data.config['LOGGING']['2']+': '+str(message))
+      print('['+now.strftime("%H:%M:%S")+'] WARN: '+str(message))
   elif (level == 3):
-    data.logFile.write('['+now.strftime("%H:%M:%S")+'] '+data.config['LOGGING']['3']+': '+str(message)+'\n')
+    data.logFile.write('['+now.strftime("%H:%M:%S")+'] ERROR: '+str(message)+'\n')
     if Print == True:
-      print('['+now.strftime("%H:%M:%S")+'] '+data.config['LOGGING']['3']+': '+str(message))
+      print('['+now.strftime("%H:%M:%S")+'] ERROR: '+str(message))
   elif (level == 4):
-    data.logFile.write('['+now.strftime("%H:%M:%S")+'] '+data.config['LOGGING']['4']+': '+str(message))
+    data.logFile.write('['+now.strftime("%H:%M:%S")+'] CRITICAL: '+str(message))
     if Print == True:
-      die(True, '['+now.strftime("%H:%M:%S")+'] '+data.config['LOGGING']['4']+': '+str(message))
+      die(True, '['+now.strftime("%H:%M:%S")+'] CRITICAL: '+str(message))
   else:
     die(True, 'Invalid logging level!')
 # end

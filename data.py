@@ -1,8 +1,8 @@
 import lib
 
-DEBUG = True
+DEBUG = False
 INTEG_Storage = {}
+logFile = lib.Handler.Log()
 config = lib.Handler.Config()
 lang = lib.Handler.Lang()
-logFile = lib.Handler.Log()
 Storage = None

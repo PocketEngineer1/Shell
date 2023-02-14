@@ -8,21 +8,17 @@ class Handler:
       config.sections()
       config.read('config.ini')
     else:
+      functions.log('No config file found!', 2)
+      functions.log('Writing config file...', 1)
       file = open("config.ini", "a")
       file.write("[MAIN]\n")
       file.write("cmd_txt=<CWD>>\n")
       file.write("lang=en_US\n\n")
-      file.write("[LOGGING]\n")
-      file.write("0=LOG\n")
-      file.write("1=INFO\n")
-      file.write("2=WARN\n")
-      file.write("3=ERROR\n")
-      file.write("4=FATAL ERROR")
       file.close()
       config = configparser.ConfigParser()
       config.sections()
       config.read('config.ini')
-      functions.log('No config file found!', 2)
+      functions.log('Wrote new config file!', 1)
     return config
   # end
 

@@ -1,4 +1,5 @@
-import toml, importlib.util, os, json
+import toml, importlib.util, os, json, mergedeep
+
 import data, functions
 
 def load():
@@ -29,5 +30,6 @@ def load():
             data.INTEG_Storage[i]['lang'][w.split('.toml')[0]] = toml.decoder.load(data.INTEG_Storage[i]['dir']+'/lang/'+w)
 
         if data.config['MAIN']['lang'] in data.INTEG_Storage[i]['lang']:
-          data.lang.update(data.INTEG_Storage[i]['lang'][data.config['MAIN']['lang']])
+          mergedeep.merge(data.lang, data.INTEG_Storage[i]['lang'][data.config['MAIN']['lang']])
+  del i
 # end
