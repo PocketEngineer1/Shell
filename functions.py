@@ -251,21 +251,21 @@ def cmd(Input = ''):
       subprocess.run("clear")
     return
 
-  for k in data.INTEG_Storage:
-    for t in data.INTEG_Storage[k]['aliases']:
-      if Temp[0] == t.lower():
-        data.INTEG_Storage[k]['module'].integ(Temp)
-        return
+  elif Temp[0] == 'exit' or Temp[0] == 'quit' or Temp[0] == 'die' or Temp[0] == 'end' or Temp[0] == 'abort' or Temp[0] == 'abandon':
+    log(data.lang['GENERAL']['normal_exit'], 1)
+    die()
 
-      elif Temp[0] == 'exit' or Temp[0] == 'quit' or Temp[0] == 'die' or Temp[0] == 'end' or Temp[0] == 'abort' or Temp[0] == 'abandon':
-        log(data.lang['GENERAL']['normal_exit'], 1)
-        die()
+  elif Temp[0] == '':
+    log(data.lang['ERROR']['no_command_inputted'], 3)
+    return
 
-      elif Temp[0] == '':
-        log(data.lang['ERROR']['no_command_inputted'], 3)
-        return
+  else:
+    for k in data.INTEG_Storage:
+      for t in data.INTEG_Storage[k]['aliases']:
+        if Temp[0] == t.lower():
+          data.INTEG_Storage[k]['module'].integ(Temp)
+          return
+    log(data.lang['ERROR']['unknown_command'], 3)
 
-      else:
-        log(data.lang['ERROR']['unknown_command'], 3)
-        return
+    return
 # end

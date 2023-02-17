@@ -1,5 +1,4 @@
 import toml, importlib.util, os, json, mergedeep
-
 import data, functions
 
 def load():
