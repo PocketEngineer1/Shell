@@ -16,6 +16,6 @@ def integ(input: list):
         else:
           functions.log(data.lang['ERROR']['missing_arguement'], 3)
       else:
-        functions.commands.Help([input[0], TemP[0]])
+        functions.commands.Help.Main([input[0], TemP[0]])
     else:
-      functions.commands.Help([input[0]])
+      functions.commands.Help.Main([input[0]])

@@ -56,9 +56,9 @@ def cmd(Input = ''):
 
   if Temp[0] == 'help':
     if 1 < len(Temp):
-      commands.Help(Temp[1].split(' '))
+      commands.Help.Main(Temp[1].split(' '))
     else:
-      commands.Help([])
+      commands.Help.Main([])
     return
 
   elif Temp[0] == 'cd':
@@ -75,7 +75,7 @@ def cmd(Input = ''):
       else:
         log(data.lang['ERROR']['PATH']['invalid'], 3)
     else:
-      commands.Help([Temp[0]])
+      commands.Help.Main([Temp[0]])
     return
 
   elif Temp[0] == 'reference' or Temp[0] == 'include':
@@ -89,7 +89,7 @@ def cmd(Input = ''):
       else:
         log(data.lang['ERROR']['PATH']['invalid'], 3)
     else:
-      commands.Help([Temp[0]])
+      commands.Help.Main([Temp[0]])
     return
 
   elif Temp[0] == 'ls' or Temp[0] == 'dir':
@@ -125,14 +125,14 @@ def cmd(Input = ''):
       else:
         log(data.lang['ERROR']['missing_arguement'], 3)
     else:
-      commands.Help([Temp[0]])
+      commands.Help.Main([Temp[0]])
     return
 
   elif Temp[0] == 'integ' or Temp[0] == 'pkg':
     if 1 < len(Temp):
       log(data.lang['ERROR']['missing_command'], 4)
     else:
-      commands.Help([Temp[0]])
+      commands.Help.Main([Temp[0]])
     return
 
   elif Temp[0] == 'echo' or Temp[0] == 'print':
@@ -149,7 +149,7 @@ def cmd(Input = ''):
       log(Temp[1], Print=False)
       subprocess.run(Temp[1])
     else:
-      commands.Help([Temp[0]])
+      commands.Help.Main([Temp[0]])
     return
 
   elif Temp[0] == 'read' or Temp[0] == 'dump':
@@ -168,7 +168,7 @@ def cmd(Input = ''):
       else:
         log(data.lang['ERROR']['PATH']['invalid'], 3)
     else:
-      commands.Help([Temp[0]])
+      commands.Help.Main([Temp[0]])
     return
 
   elif Temp[0] == 'rm':
@@ -187,7 +187,7 @@ def cmd(Input = ''):
       else:
         log(data.lang['ERROR']['PATH']['invalid'], 3)
     else:
-      commands.Help([Temp[0]])
+      commands.Help.Main([Temp[0]])
     return
 
   elif Temp[0] == 'rmdir':
@@ -203,7 +203,7 @@ def cmd(Input = ''):
       else:
         log(data.lang['ERROR']['PATH']['invalid'], 3)
     else:
-      commands.Help([Temp[0]])
+      commands.Help.Main([Temp[0]])
     return
 
   elif Temp[0] == 'mkdir':
@@ -219,7 +219,7 @@ def cmd(Input = ''):
       else:
         log(data.lang['ERROR']['PRIVILEGE']['forbidden'], 3)
     else:
-      commands.Help([Temp[0]])
+      commands.Help.Main([Temp[0]])
     return
 
   elif Temp[0] == 'test':
