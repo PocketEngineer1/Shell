@@ -30,5 +30,6 @@ def load():
 
         if data.config['MAIN']['lang'] in data.INTEG_Storage[i]['lang']:
           mergedeep.merge(data.lang, data.INTEG_Storage[i]['lang'][data.config['MAIN']['lang']])
-  del i
+
+        module.init()
 # end

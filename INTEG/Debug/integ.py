@@ -1,4 +1,7 @@
 import data
 
-def integ(input: list):
+def main(input: list):
   print(data.INTEG_Storage)
+
+def init():
+  ...

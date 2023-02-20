@@ -263,7 +263,7 @@ def cmd(Input = ''):
     for k in data.INTEG_Storage:
       for t in data.INTEG_Storage[k]['aliases']:
         if Temp[0] == t.lower():
-          data.INTEG_Storage[k]['module'].integ(Temp)
+          data.INTEG_Storage[k]['module'].main(Temp)
           return
     log(data.lang['ERROR']['unknown_command'], 3)
 

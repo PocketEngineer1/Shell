@@ -1,6 +1,6 @@
 import data, functions
 
-def integ(input: list):
+def main(input: list):
   if input[0] == 'logic':
     if 1 < len(input):
       TemP = input[1].split(' ', 1)
@@ -19,3 +19,6 @@ def integ(input: list):
         functions.commands.Help.Main([input[0], TemP[0]])
     else:
       functions.commands.Help.Main([input[0]])
+
+def init():
+  ...
