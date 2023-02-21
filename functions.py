@@ -222,26 +222,6 @@ def cmd(Input = ''):
       commands.Help.Main([Temp[0]])
     return
 
-  elif Temp[0] == 'test':
-    if 1 < len(Temp):
-      if Temp[1] == 'ls':
-        for i in os.listdir(REPLACE('<APP_DIR>')+'/INTEG'):
-          if os.path.isdir(os.path.normpath(REPLACE('<APP_DIR>')+'/INTEG/'+i)):
-            print(i)
-      elif Temp[1] == 'integ':
-        INTEG.load()
-      else:
-        file_path = os.path.normpath(REPLACE('<APP_DIR>')+'/INTEG/'+i)
-        module_name = i
-
-        spec = importlib.util.spec_from_file_location(module_name, file_path)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-
-        # Verify contents of the module:
-        print(dir(module))
-    return
-
   elif Temp[0] == 'clear' or Temp[0] == 'cls':
     if os.name == 'nt':
       log(lang['COMMAND_OUTPUT']['CLEAR']['main'], 1, False)
