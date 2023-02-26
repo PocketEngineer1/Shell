@@ -2,6 +2,8 @@ import os
 import data, functions
 
 class Help:
+  TeMp = 0
+
   def Main(Input: list):
     if 0 < len(Input):
       Input[0] = Input[0].upper()
@@ -15,6 +17,16 @@ class Help:
               Tmp += '[\''+k+'\']'
             exec('print('+Tmp+')')
             del Temp, Tmp
+    
+    else:
+      for i in data.INTEG_Storage:
+        for g in data.INTEG_Storage[i]['help']:
+          Temp = data.INTEG_Storage[i]['help'][g][0].split('.')
+          Tmp = 'data.lang'
+          for k in Temp:
+            Tmp += '[\''+k+'\']'
+          exec('print('+Tmp+')')
+          del Temp, Tmp
 
     #   if Input[0] == 'HELP':
     #     print(data.lang['HELP']['HELP']['main']+'\n')
