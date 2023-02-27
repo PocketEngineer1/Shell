@@ -1,5 +1,5 @@
-import re, os, datetime, sys, subprocess, importlib
-import commands, data, integ as INTEG
+import re, os, datetime, sys, subprocess
+import commands, data, integ
 
 def die(error = False, message = "Unknown error!"):
   data.logFile.close()
@@ -130,7 +130,16 @@ def cmd(Input = ''):
 
   elif Temp[0] == 'integ' or Temp[0] == 'pkg':
     if 1 < len(Temp):
-      log(data.lang['ERROR']['missing_command'], 4)
+      if Temp[1] == 'install':
+        integ.install(Temp)
+      elif Temp[1] == 'remove':
+        ...
+      elif Temp[1] == 'upgrade':
+        ...
+      elif Temp[1] == 'package':
+        ...
+      elif Temp[1] == 'reload':
+        ...
     else:
       commands.Help.Main([Temp[0]])
     return
