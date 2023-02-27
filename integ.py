@@ -1,5 +1,5 @@
 import toml, importlib.util, os, json, mergedeep
-import data, functions, commands
+import data, functions
 
 def load():
   for i in os.listdir(functions.REPLACE('<APP_DIR>')+'/INTEG'):
@@ -32,29 +32,28 @@ def load():
           mergedeep.merge(data.lang, data.INTEG_Storage[i]['lang'][data.config['MAIN']['lang']])
 
         module.init()
+  print('Loaded ' + str(len(data.INTEG_Storage)) + ' INTEGs!')
 # end
 
-def install(Input: list):
-  if 1 < len(Input):
-    TemP = Input[1].split(' ', 1)
-
-    ...
-  else:
-    commands.Help.Main([Input[0], Input[1]])
-# end
-
-def remove(Input: list):
+def install():
   ...
 # end
 
-def upgrade(Input: list):
+def remove():
   ...
 # end
 
-def package(Input: list):
+def upgrade():
+  ...
+# end
+
+def package():
   ...
 # end
 
 def reload():
-  ...
+  print('Reloading INTEGs...')
+  data.INTEG_Storage = {}
+  load()
+  print('INTEGs Reloaded!')
 # end

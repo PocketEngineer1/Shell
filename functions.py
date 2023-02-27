@@ -128,10 +128,15 @@ def cmd(Input = ''):
       commands.Help.Main([Temp[0]])
     return
 
-  elif Temp[0] == 'integ' or Temp[0] == 'pkg':
+  elif Temp[0] == 'integ':
     if 1 < len(Temp):
       if Temp[1] == 'install':
-        integ.install(Temp)
+        if 1 < len(Input):
+          TemP = Input[1].split(' ', 1)
+          integ.install(TemP[1])
+        else:
+          commands.Help.Main([Input[0], Input[1]])
+        
       elif Temp[1] == 'remove':
         ...
       elif Temp[1] == 'upgrade':
@@ -139,7 +144,7 @@ def cmd(Input = ''):
       elif Temp[1] == 'package':
         ...
       elif Temp[1] == 'reload':
-        ...
+        integ.reload()
     else:
       commands.Help.Main([Temp[0]])
     return
