@@ -20,6 +20,12 @@ forbidden="You don't have read or write access!"
 [COMMAND_OUTPUT.CLEAR]
 main="Cleared the screen"
 
+[COMMAND_OUTPUT.INTEG.RELOAD]
+reloading="Reloading INTEGs..."
+reloaded="INTEGs Reloaded!"
+[COMMAND_OUTPUT.INTEG.LOAD]
+main="Loaded <INT> INTEGs!"
+
 [HELP]
 more_info="For more information on a specific command, type HELP command-name"
 [HELP.HELP]

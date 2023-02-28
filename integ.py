@@ -32,9 +32,10 @@ def load():
           mergedeep.merge(data.lang, data.INTEG_Storage[i]['lang'][data.config['MAIN']['lang']])
 
         module.init()
-  print('Loaded ' + str(len(data.INTEG_Storage)) + ' INTEGs!')
+  functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['LOAD']['main'].replace('<INT>', str(len(data.INTEG_Storage))), 1)
 # end
 
+# 'Loaded ' + str(len(data.INTEG_Storage)) + ' INTEGs!'
 def install():
   ...
 # end
@@ -52,8 +53,8 @@ def package():
 # end
 
 def reload():
-  print('Reloading INTEGs...')
+  functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['RELOAD']['reloading'], 1)
   data.INTEG_Storage = {}
   load()
-  print('INTEGs Reloaded!')
+  functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['RELOAD']['reloaded'], 1)
 # end
