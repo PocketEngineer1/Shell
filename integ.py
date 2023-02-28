@@ -1,4 +1,4 @@
-import toml, importlib.util, os, json, mergedeep
+import toml, importlib.util, os, json, mergedeep, zipfile
 import data, functions
 
 def load():
@@ -7,7 +7,7 @@ def load():
       if os.path.exists(functions.REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml'):
         integ_config = toml.decoder.load(functions.REPLACE('<APP_DIR>')+'/INTEG/'+i+'/integ.toml')
 
-        spec = importlib.util.spec_from_file_location(i, functions.REPLACE('<APP_DIR>')+'/INTEG/'+i+'/'+integ_config['MAIN']['script'])
+        spec = importlib.util.spec_from_file_location(i, functions.REPLACE('<APP_DIR>/INTEG/'+i+'/'+integ_config['MAIN']['script']))
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
 
@@ -15,7 +15,7 @@ def load():
           'config': integ_config,
           'module': module,
           'aliases': integ_config['MAIN']['aliases'],
-          'dir': functions.REPLACE('<APP_DIR>')+'/INTEG/'+i,
+          'dir': functions.REPLACE('<APP_DIR>/INTEG/'+i),
           'lang': {},
           'help': {}
         }
@@ -33,6 +33,7 @@ def load():
 
         module.init()
   functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['LOAD']['main'].replace('<INT>', str(len(data.INTEG_Storage))), 1)
+  del i, integ_config, spec, module, w
 # end
 
 def install():
@@ -47,8 +48,16 @@ def upgrade():
   ...
 # end
 
-def package():
-  ...
+def package(Integ: str):
+  if os.path.exists('Output') == False:
+    os.mkdir('Output')
+  if Integ in data.INTEG_Storage:
+    functions.log('Packaging '+Integ+'...', 1)
+    with zipfile.ZipFile(Integ + '.integ', 'w') as f:
+      functions.zipdir(data.INTEG_Storage[Integ]['dir'], f)
+    functions.log('Packaged '+Integ+'!', 1)
+  else:
+    functions.log('Failed to locate '+Integ)
 # end
 
 def reload():
