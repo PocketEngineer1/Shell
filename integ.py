@@ -35,7 +35,6 @@ def load():
   functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['LOAD']['main'].replace('<INT>', str(len(data.INTEG_Storage))), 1)
 # end
 
-# 'Loaded ' + str(len(data.INTEG_Storage)) + ' INTEGs!'
 def install():
   ...
 # end
