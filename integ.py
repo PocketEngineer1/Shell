@@ -53,11 +53,15 @@ def package(Integ: str):
     os.mkdir('Output')
   if Integ in data.INTEG_Storage:
     functions.log('Packaging '+Integ+'...', 1)
-    with zipfile.ZipFile(Integ + '.integ', 'w') as f:
-      functions.zipdir(data.INTEG_Storage[Integ]['dir'], f)
+    with zipfile.ZipFile('./Output/'+Integ+'.integ', 'w') as f:
+      for root, dirs, files in os.walk(data.INTEG_Storage[Integ]['dir']):
+        for dir in dirs:
+          f.write(os.path.join(root, dir), dir)
+        for file in files:
+          f.write(os.path.join(root, file), file)
     functions.log('Packaged '+Integ+'!', 1)
   else:
-    functions.log('Failed to locate '+Integ)
+    functions.log(Integ+' doesn\'t exist!')
 # end
 
 def reload():

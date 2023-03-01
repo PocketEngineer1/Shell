@@ -25,6 +25,10 @@ reloading="Reloading INTEGs..."
 reloaded="INTEGs Reloaded!"
 [COMMAND_OUTPUT.INTEG.LOAD]
 main="Loaded <INT> INTEGs!"
+[COMMAND_OUTPUT.INTEG.PACKAGE]
+packaging="Packaging <INTEG>..."
+packaged="'Packaged <INTEG>!'"
+notfound="<INTEG> doesn't exist!"
 
 [HELP]
 more_info="For more information on a specific command, type HELP command-name"

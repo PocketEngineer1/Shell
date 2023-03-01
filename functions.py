@@ -8,12 +8,6 @@ def die(error = False, message = "Unknown error!"):
   sys.exit()
 # end
 
-def zipdir(path: str, ziph: zipfile.ZipFile):
-  # ziph is zipfile handle
-  for root, dirs, files in os.walk(path):
-    for file in files:
-      ziph.write(os.path.join(root, file))
-
 def log(message, level = 0, Print = True, Info = False):
   now = datetime.datetime.now()
   if level == 0:
@@ -148,26 +142,24 @@ def cmd(Input = ''):
 
   elif Temp[0] == 'integ':
     if 1 < len(Temp):
-      if Temp[1] == 'install':
+      TemP = Temp[1].split(' ', 1)
+      if TemP[0] == 'install':
         ...
         
-      elif Temp[1] == 'remove':
+      elif TemP[0] == 'remove':
         ...
 
-      elif Temp[1] == 'upgrade':
+      elif TemP[0] == 'upgrade':
         ...
 
-      elif Temp[1] == 'package':
-        log('TETEffaT')
-        TemP = Temp[1].split(' ', 1)
+      elif TemP[0] == 'package':
         if 1 < len(TemP):
-          log('TETET')
           integ.package(TemP[1])
 
-      elif Temp[1] == 'reload':
+      elif TemP[0]== 'reload':
         integ.reload()
 
-      elif Temp[1] == 'list':
+      elif TemP[0] == 'list':
         for i in data.INTEG_Storage:
           print(i)
         del i
