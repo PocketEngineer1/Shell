@@ -156,7 +156,7 @@ def cmd(Input = ''):
         if 1 < len(TemP):
           integ.package(TemP[1])
 
-      elif TemP[0]== 'reload':
+      elif TemP[0] == 'reload':
         integ.reload()
 
       elif TemP[0] == 'list':

@@ -56,9 +56,11 @@ def package(Integ: str):
     with zipfile.ZipFile('./Output/'+Integ+'.integ', 'w') as f:
       for root, dirs, files in os.walk(data.INTEG_Storage[Integ]['dir']):
         for dir in dirs:
-          f.write(os.path.join(root, dir), dir)
+          if dir != '__pycache__':
+            f.write(os.path.join(root, dir), os.path.join(root, dir).split(data.INTEG_Storage[Integ]['dir'])[1])
         for file in files:
-          f.write(os.path.join(root, file), file)
+          if file.endswith('.pyc') == False:
+            f.write(os.path.join(root, file), os.path.join(root, file).split(data.INTEG_Storage[Integ]['dir'])[1])
     functions.log('Packaged '+Integ+'!', 1)
   else:
     functions.log(Integ+' doesn\'t exist!')
