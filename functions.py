@@ -164,6 +164,11 @@ def cmd(Input = ''):
           print(i)
         del i
 
+      elif TemP[0] == 'run':
+        if 1 < len(TemP):
+          TeMp = TemP[1].split(' ')
+          integ.run(TeMp[0], TeMp[1].split(' '))
+
     else:
       commands.Help.Main([Temp[0]])
     return

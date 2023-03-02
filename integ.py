@@ -32,7 +32,7 @@ def load():
           mergedeep.merge(data.lang, data.INTEG_Storage[i]['lang'][data.config['MAIN']['lang']])
 
         module.init()
-  functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['LOAD']['main'].replace('<INT>', str(len(data.INTEG_Storage))), 1)
+  functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['LOAD']['main'].replace('<INT>', str(len(data.INTEG_Storage))))
   del i, integ_config, spec, module, w
 # end
 
@@ -52,7 +52,7 @@ def package(Integ: str):
   if os.path.exists('Output') == False:
     os.mkdir('Output')
   if Integ in data.INTEG_Storage:
-    functions.log('Packaging '+Integ+'...', 1)
+    functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['PACKAGE']['packaging'].replace('<INTEG>', Integ))
     with zipfile.ZipFile('./Output/'+Integ+'.integ', 'w') as f:
       for root, dirs, files in os.walk(data.INTEG_Storage[Integ]['dir']):
         for dir in dirs:
@@ -61,9 +61,9 @@ def package(Integ: str):
         for file in files:
           if file.endswith('.pyc') == False:
             f.write(os.path.join(root, file), os.path.join(root, file).split(data.INTEG_Storage[Integ]['dir'])[1])
-    functions.log('Packaged '+Integ+'!', 1)
+    functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['PACKAGE']['packaged'].replace('<INTEG>', Integ))
   else:
-    functions.log(Integ+' doesn\'t exist!')
+    functions.log(data.lang['ERROR']['INTEG']['notfound'].replace('<INTEG>', Integ))
 # end
 
 def reload():
@@ -72,3 +72,9 @@ def reload():
   load()
   functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['RELOAD']['reloaded'], 1)
 # end
+
+def run(Integ: str, Input: list):
+  if Integ in data.INTEG_Storage:
+    data.INTEG_Storage[Integ]['module'].main(Input)
+  else:
+    functions.log(data.lang['ERROR']['INTEG']['notfound'].replace('<INTEG>', Integ))

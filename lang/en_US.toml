@@ -16,6 +16,8 @@ not_dir="That isn't a folder!"
 [ERROR.PRIVILEGE]
 read_only="That path is read only!"
 forbidden="You don't have read or write access!"
+[ERROR.INTEG]
+notfound="<INTEG> doesn't exist!"
 
 [COMMAND_OUTPUT.CLEAR]
 main="Cleared the screen"
@@ -27,8 +29,7 @@ reloaded="INTEGs Reloaded!"
 main="Loaded <INT> INTEGs!"
 [COMMAND_OUTPUT.INTEG.PACKAGE]
 packaging="Packaging <INTEG>..."
-packaged="'Packaged <INTEG>!'"
-notfound="<INTEG> doesn't exist!"
+packaged="Packaged <INTEG>!"
 
 [HELP]
 more_info="For more information on a specific command, type HELP command-name"
