@@ -147,10 +147,12 @@ def cmd(Input = ''):
         ...
         
       elif TemP[0] == 'remove':
-        ...
+        if 1 < len(TemP):
+          integ.remove(TemP[1])
 
       elif TemP[0] == 'upgrade':
-        ...
+        if 1 < len(TemP):
+          integ.upgrade(TemP[1])
 
       elif TemP[0] == 'package':
         if 1 < len(TemP):

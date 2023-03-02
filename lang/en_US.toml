@@ -8,6 +8,8 @@ no_command_inputted="User failed to input command!"
 unknown_command="Invalid command!"
 language_file="There appears to be an issue with the language file!"
 missing_arguement="Missing command arguement"
+[ERROR.FAIL]
+create_dir="Failed to create directory!"
 [ERROR.PATH]
 invalid="No such file or directory!"
 existing="That file or directory already exists!"
@@ -18,6 +20,10 @@ read_only="That path is read only!"
 forbidden="You don't have read or write access!"
 [ERROR.INTEG]
 notfound="<INTEG> doesn't exist!"
+[ERROR.INTEG.FAIL]
+load="Failed to INTEGs!"
+remove="Failed to remove <INTEG>!"
+package="Failed to package <INTEG>!"
 
 [COMMAND_OUTPUT.CLEAR]
 main="Cleared the screen"
@@ -30,6 +36,9 @@ main="Loaded <INT> INTEGs!"
 [COMMAND_OUTPUT.INTEG.PACKAGE]
 packaging="Packaging <INTEG>..."
 packaged="Packaged <INTEG>!"
+[COMMAND_OUTPUT.INTEG.REMOVE]
+removing="Removing <INTEG>..."
+removed="Removed <INTEG>!"
 
 [HELP]
 more_info="For more information on a specific command, type HELP command-name"
