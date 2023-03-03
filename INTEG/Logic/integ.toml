@@ -4,3 +4,4 @@ depends=[]
 aliases=["logic"] # Commands
 script="integ.py" # Main script
 help="help" # Help command registration # Failed to translate JSON to TOML
+pkgname="Logic"

@@ -1,25 +1,25 @@
-import os, configparser, datetime, toml
+import os, datetime, toml
 import data, functions
 
 class Handler:
   def Config():
-    if (os.path.exists("config.ini")):
-      config = configparser.ConfigParser()
-      config.sections()
-      config.read('config.ini')
-    else:
-      functions.log('No config file found!', 2)
-      functions.log('Writing config file...', 1)
-      file = open("config.ini", "a")
-      file.write("[MAIN]\n")
-      file.write("cmd_txt=<CWD>>\n")
-      file.write("lang=en_US\n\n")
-      file.close()
-      config = configparser.ConfigParser()
-      config.sections()
-      config.read('config.ini')
-      functions.log('Wrote new config file!', 1)
-    return config
+    try:
+      if (os.path.exists("config.toml")):
+        config = toml.decoder.load('./config.toml')
+      else:
+        functions.log('No config file found!', 2)
+        functions.log('Writing config file...', 1)
+        file = open("config.toml", "a")
+        file.write("[MAIN]\n")
+        file.write("cmd_txt='<CWD>>'\n")
+        file.write("lang=\"en_US\"\n")
+        file.write("integ_sources=[\""+os.path.expanduser('~')+"/Downloads\"]\n")
+        file.close()
+        config = toml.decoder.load('./config.toml')
+        functions.log('Wrote new config file!', 1)
+      return config
+    except:
+      functions.log('An issue ocurred while handling the config file!', 4)
   # end
 
   def Lang():

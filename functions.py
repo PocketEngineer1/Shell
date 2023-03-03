@@ -144,7 +144,8 @@ def cmd(Input = ''):
     if 1 < len(Temp):
       TemP = Temp[1].split(' ', 1)
       if TemP[0] == 'install':
-        ...
+        if 1 < len(TemP):
+          integ.install(TemP[1])
         
       elif TemP[0] == 'remove':
         if 1 < len(TemP):
@@ -232,6 +233,7 @@ def cmd(Input = ''):
 
   elif Temp[0] == 'rmdir':
     if 1 < len(Temp):
+      
       y = REPLACE(Temp[1])
       if os.path.exists(os.path.normpath(y)):
         if os.access(os.path.normpath(y), os.W_OK) == True:

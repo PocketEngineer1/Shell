@@ -4,3 +4,4 @@ depends=[]
 aliases=["debug"] # Commands
 script="integ.py" # Main script
 help="help" # Help command registration # Failed to translate JSON to TOML
+pkgname="Debug"

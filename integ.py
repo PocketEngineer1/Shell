@@ -18,6 +18,7 @@ def load():
             'version': integ_config['MAIN']['version'],
             'depends': integ_config['MAIN']['depends'],
             'aliases': integ_config['MAIN']['aliases'],
+            'name': integ_config['MAIN']['pkgname'],
             'dir': functions.REPLACE('<APP_DIR>/INTEG/'+i),
             'lang': {},
             'help': {}
@@ -41,8 +42,11 @@ def load():
     functions.log(data.lang['ERROR']['INTEG']['FAIL']['load'], 4)
 # end
 
-def install():
-  ...
+def install(Integ: str):
+  try:
+    ...
+  except:
+    ...
 # end
 
 def remove(Integ: str):
