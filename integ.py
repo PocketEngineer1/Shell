@@ -36,13 +36,14 @@ def load():
             mergedeep.merge(data.lang, data.INTEG_Storage[i]['lang'][data.config['MAIN']['lang']])
 
           module.init()
-    functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['LOAD']['main'].replace('<INT>', str(len(data.INTEG_Storage))), 1)
+    functions.log(data.lang['INTEG']['LOAD']['main'].replace('<INT>', str(len(data.INTEG_Storage))), 1)
     del i, integ_config, spec, module, w
   except:
-    functions.log(data.lang['ERROR']['INTEG']['FAIL']['load'], 4)
+    functions.log(data.lang['INTEG']['LOAD']['fail'], 4)
 # end
 
 def install(Integ: str):
+  functions.log(data.lang['INTEG']['INSTALL']['installing'], 1)
   for c in data.config['MAIN']['integ_sources']:
     for x in os.listdir(c):
       if zipfile.is_zipfile(c+'/'+x):
@@ -56,17 +57,18 @@ def install(Integ: str):
               if Integ == temp_conf['MAIN']['pkgname']:
                 shutil.copytree(dir, functions.REPLACE('<APP_DIR>/INTEG/'+Integ))
                 reload()
+  functions.log(data.lang['INTEG']['INSTALL']['installed'], 1)
 # end
 
 def remove(Integ: str):
     if Integ in data.INTEG_Storage:
       try:
-        functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['REMOVE']['removing'].replace('<INTEG>', Integ), 1)
+        functions.log(data.lang['INTEG']['REMOVE']['removing'].replace('<INTEG>', Integ), 1)
         shutil.rmtree(data.INTEG_Storage[Integ]['dir'])
         reload()
-        functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['REMOVE']['removed'].replace('<INTEG>', Integ), 1)
+        functions.log(data.lang['INTEG']['REMOVE']['removed'].replace('<INTEG>', Integ), 1)
       except:
-        functions.log(data.lang['ERROR']['INTEG']['FAIL']['remove'].replace('<INTEG>', Integ), 3)
+        functions.log(data.lang['INTEG']['REMOVE']['fail'].replace('<INTEG>', Integ), 3)
     else:
       functions.log(data.lang['ERROR']['INTEG']['notfound'].replace('<INTEG>', Integ), 3)
 # end
@@ -88,7 +90,7 @@ def package(Integ: str):
   
   if Integ in data.INTEG_Storage:
     try:
-      functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['PACKAGE']['packaging'].replace('<INTEG>', Integ), 1)
+      functions.log(data.lang['INTEG']['PACKAGE']['packaging'].replace('<INTEG>', Integ), 1)
       with zipfile.ZipFile('./Output/'+Integ+'.integ', 'w') as f:
         for root, dirs, files in os.walk(data.INTEG_Storage[Integ]['dir']):
           for dir in dirs:
@@ -98,18 +100,18 @@ def package(Integ: str):
             if file.endswith('.pyc') == False:
               f.write(os.path.join(root, file), os.path.join(root, file).split(data.INTEG_Storage[Integ]['dir'])[1])
         f.close()
-      functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['PACKAGE']['packaged'].replace('<INTEG>', Integ), 1)
+      functions.log(data.lang['INTEG']['PACKAGE']['packaged'].replace('<INTEG>', Integ), 1)
     except:
-      functions.log(data.lang['ERROR']['INTEG']['FAIL']['package'].replace('<INTEG>', Integ), 3)
+      functions.log(data.lang['INTEG']['PACKAGE']['faile'].replace('<INTEG>', Integ), 3)
   else:
     functions.log(data.lang['ERROR']['INTEG']['notfound'].replace('<INTEG>', Integ), 3)
 # end
 
 def reload():
-  functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['RELOAD']['reloading'], 1)
+  functions.log(data.lang['INTEG']['RELOAD']['reloading'], 1)
   data.INTEG_Storage = {}
-  functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['RELOAD']['reloaded'], 1)
   load()
+  functions.log(data.lang['INTEG']['RELOAD']['reloaded'], 1)
 # end
 
 def run(Integ: str, Input: list):

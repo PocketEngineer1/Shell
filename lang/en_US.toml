@@ -20,25 +20,28 @@ read_only="That path is read only!"
 forbidden="You don't have read or write access!"
 [ERROR.INTEG]
 notfound="<INTEG> doesn't exist!"
-[ERROR.INTEG.FAIL]
-load="Failed to load INTEGs!"
-remove="Failed to remove <INTEG>!"
-package="Failed to package <INTEG>!"
 
 [COMMAND_OUTPUT.CLEAR]
 main="Cleared the screen"
 
-[COMMAND_OUTPUT.INTEG.RELOAD]
+[INTEG.RELOAD]
 reloading="Reloading INTEGs..."
 reloaded="INTEGs Reloaded!"
-[COMMAND_OUTPUT.INTEG.LOAD]
+[INTEG.LOAD]
 main="Loaded <INT> INTEGs!"
-[COMMAND_OUTPUT.INTEG.PACKAGE]
+fail="Failed to load INTEGs!"
+[INTEG.PACKAGE]
 packaging="Packaging <INTEG>..."
 packaged="Packaged <INTEG>!"
-[COMMAND_OUTPUT.INTEG.REMOVE]
+fail="Failed to package <INTEG>!"
+[INTEG.REMOVE]
 removing="Removing <INTEG>..."
 removed="Removed <INTEG>!"
+fail="Failed to remove <INTEG>!"
+[INTEG.INSTALL]
+installing="Installing <INTEG>..."
+installed="Installed <INTEG>!"
+fail="Failed to install <INTEG>!"
 
 [HELP]
 more_info="For more information on a specific command, type HELP command-name"
