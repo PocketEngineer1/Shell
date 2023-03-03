@@ -1,4 +1,4 @@
-import toml, importlib.util, os, json, mergedeep, zipfile, shutil
+import toml, importlib.util, os, json, mergedeep, zipfile, shutil, tempfile
 import data, functions
 
 def load():
@@ -43,10 +43,19 @@ def load():
 # end
 
 def install(Integ: str):
-  try:
-    ...
-  except:
-    ...
+  for c in data.config['MAIN']['integ_sources']:
+    for x in os.listdir(c):
+      if zipfile.is_zipfile(c+'/'+x):
+        if x.lower().endswith('.integ'):
+          with zipfile.ZipFile(c+'/'+x) as f:
+            dir = data.Storage['TEMP_DIR']+'/'+x
+            f.extractall(dir)
+            f.close()
+            if os.path.exists(dir+'/integ.toml'):
+              temp_conf = toml.decoder.load(dir+'/integ.toml')
+              if Integ == temp_conf['MAIN']['pkgname']:
+                shutil.copytree(dir, functions.REPLACE('<APP_DIR>/INTEG/'+Integ))
+                reload()
 # end
 
 def remove(Integ: str):
@@ -54,6 +63,7 @@ def remove(Integ: str):
       try:
         functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['REMOVE']['removing'].replace('<INTEG>', Integ), 1)
         shutil.rmtree(data.INTEG_Storage[Integ]['dir'])
+        reload()
         functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['REMOVE']['removed'].replace('<INTEG>', Integ), 1)
       except:
         functions.log(data.lang['ERROR']['INTEG']['FAIL']['remove'].replace('<INTEG>', Integ), 3)
@@ -87,6 +97,7 @@ def package(Integ: str):
           for file in files:
             if file.endswith('.pyc') == False:
               f.write(os.path.join(root, file), os.path.join(root, file).split(data.INTEG_Storage[Integ]['dir'])[1])
+        f.close()
       functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['PACKAGE']['packaged'].replace('<INTEG>', Integ), 1)
     except:
       functions.log(data.lang['ERROR']['INTEG']['FAIL']['package'].replace('<INTEG>', Integ), 3)
@@ -97,8 +108,8 @@ def package(Integ: str):
 def reload():
   functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['RELOAD']['reloading'], 1)
   data.INTEG_Storage = {}
-  load()
   functions.log(data.lang['COMMAND_OUTPUT']['INTEG']['RELOAD']['reloaded'], 1)
+  load()
 # end
 
 def run(Integ: str, Input: list):

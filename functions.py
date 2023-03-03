@@ -1,8 +1,9 @@
-import re, os, datetime, sys, subprocess, zipfile
+import re, os, datetime, sys, subprocess, shutil
 import commands, data, integ
 
 def die(error = False, message = "Unknown error!"):
   data.logFile.close()
+  shutil.rmtree(data.Storage['TEMP_DIR'])
   if error == True:
     sys.exit(message)
   sys.exit()

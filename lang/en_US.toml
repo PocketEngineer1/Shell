@@ -21,7 +21,7 @@ forbidden="You don't have read or write access!"
 [ERROR.INTEG]
 notfound="<INTEG> doesn't exist!"
 [ERROR.INTEG.FAIL]
-load="Failed to INTEGs!"
+load="Failed to load INTEGs!"
 remove="Failed to remove <INTEG>!"
 package="Failed to package <INTEG>!"
 

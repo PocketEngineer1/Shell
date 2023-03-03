@@ -1,11 +1,12 @@
-import os, platform
+import os, platform, tempfile
 import commands, data, integ, functions
 
 data.Storage = {
   "APP_DIR": str(os.path.dirname(os.path.realpath(__file__))),
-  "HOME_DIR": str(os.path.normpath(os.path.expanduser('~'))),
-  "USER": str(os.getlogin()),
-  "HOSTNAME": str(platform.node())
+  'HOME_DIR': str(os.path.expanduser('~')),
+  'USER': os.getlogin(),
+  'HOSTNAME': platform.node(),
+  'TEMP_DIR': tempfile.mkdtemp()
 }
 
 def Main():
