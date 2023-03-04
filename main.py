@@ -1,4 +1,4 @@
-import os, platform, tempfile
+import os, platform, tempfile, json
 import commands, data, integ, functions
 
 data.Storage = {
@@ -8,6 +8,10 @@ data.Storage = {
   'HOSTNAME': platform.node(),
   'TEMP_DIR': tempfile.mkdtemp()
 }
+
+with open('integ.ign.json') as ign_lst:
+  data.INTEG_ign = json.load(ign_lst)
+  ign_lst.close()
 
 def Main():
   if os.path.exists('INTEG') == False:

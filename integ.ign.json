@@ -1,0 +1,14 @@
+{
+  "file":{
+    "endswith":[".pyc"],
+    "startswith":[],
+    "contains":[],
+    "name":[]
+  },
+  "folder":{
+    "endswith":[],
+    "startswith":[],
+    "contains":[],
+    "name":["__pycache__"]
+  }
+}

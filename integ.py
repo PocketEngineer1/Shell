@@ -94,15 +94,16 @@ def package(Integ: str):
       with zipfile.ZipFile('./Output/'+Integ+'.integ', 'w') as f:
         for root, dirs, files in os.walk(data.INTEG_Storage[Integ]['dir']):
           for dir in dirs:
-            if dir != '__pycache__':
+            if dir not in data.INTEG_ign['folder']['name'] and dir.startswith(tuple(data.INTEG_ign['folder']['startswith'])) == False and dir.endswith(tuple(data.INTEG_ign['folder']['endswith'])) == False and any([x in dir for x in data.INTEG_ign['folder']['contains']]) == False:
               f.write(os.path.join(root, dir), os.path.join(root, dir).split(data.INTEG_Storage[Integ]['dir'])[1])
           for file in files:
-            if file.endswith('.pyc') == False:
+            if file not in data.INTEG_ign['file']['name'] and file.startswith(tuple(data.INTEG_ign['file']['startswith'])) == False and file.endswith(tuple(data.INTEG_ign['file']['endswith'])) == False and any([x in file for x in data.INTEG_ign['file']['contains']]) == False:
+              print(file)
               f.write(os.path.join(root, file), os.path.join(root, file).split(data.INTEG_Storage[Integ]['dir'])[1])
         f.close()
       functions.log(data.lang['INTEG']['PACKAGE']['packaged'].replace('<INTEG>', Integ), 1)
     except:
-      functions.log(data.lang['INTEG']['PACKAGE']['faile'].replace('<INTEG>', Integ), 3)
+      functions.log(data.lang['INTEG']['PACKAGE']['fail'].replace('<INTEG>', Integ), 3)
   else:
     functions.log(data.lang['ERROR']['INTEG']['notfound'].replace('<INTEG>', Integ), 3)
 # end
