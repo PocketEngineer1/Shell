@@ -98,7 +98,6 @@ def package(Integ: str):
               f.write(os.path.join(root, dir), os.path.join(root, dir).split(data.INTEG_Storage[Integ]['dir'])[1])
           for file in files:
             if file not in data.INTEG_ign['file']['name'] and file.startswith(tuple(data.INTEG_ign['file']['startswith'])) == False and file.endswith(tuple(data.INTEG_ign['file']['endswith'])) == False and any([x in file for x in data.INTEG_ign['file']['contains']]) == False:
-              print(file)
               f.write(os.path.join(root, file), os.path.join(root, file).split(data.INTEG_Storage[Integ]['dir'])[1])
         f.close()
       functions.log(data.lang['INTEG']['PACKAGE']['packaged'].replace('<INTEG>', Integ), 1)
